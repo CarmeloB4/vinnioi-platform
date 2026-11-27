@@ -1,0 +1,29 @@
+{
+  "checked_on": "2026-11-27",
+  "results": [
+    {
+      "url": "https://www.aicaonline.it/robots.txt",
+      "status": 200,
+      "sha256": "70f3c9b6ce35c9789eedbaf1eea9fdeb1e94c888d8e23983a12ca0e9319c34d1",
+      "sample": "User-agent: *\n\tDisallow: /wp-content/uploads/AllegatiAttiAlboPretorio/"
+    },
+    {
+      "url": "https://www.siciliacque.it/robots.txt",
+      "status": 200,
+      "sha256": "35a2d100fd7099a369d0f58e635eb35eef16bf742234e58299f6b0d407b1e7b9",
+      "sample": "User-agent: *\nDisallow:\nDisallow: /cgi-bin/\nSitemap: https://www.siciliacque.it/sitemap.xml\n"
+    },
+    {
+      "url": "https://www.atiag9.it/robots.txt",
+      "status": 200,
+      "sha256": "ab7954c0758e4b9cc0391e7f150ef396f93143ee5490a5c31d38f8b879a2759d",
+      "sample": "User-agent: *\nDisallow: /wp-admin/\nAllow: /wp-admin/admin-ajax.php\n\nSitemap: https://www.atiag9.it/wp-sitemap.xml\n"
+    },
+    {
+      "url": "https://www.regione.sicilia.it/robots.txt",
+      "status": 200,
+      "sha256": "8257e11506910c9bcb7428a924f16bdb67c2d86ba95af4acfb0060cd23b205d5",
+      "sample": "User-agent: *\nCrawl-delay: 10\nDisallow: /admin/\nDisallow: /user/\nDisallow: /*?search=\nDisallow: /*?page=\n"
+    }
+  ]
+}

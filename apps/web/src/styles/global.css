@@ -1,0 +1,4 @@
+@import "tailwindcss";
+@theme { --color-water: #124e66; }
+body { font-family: system-ui, sans-serif; }
+a:focus-visible { outline: 3px solid #ea580c; outline-offset: 4px; }
