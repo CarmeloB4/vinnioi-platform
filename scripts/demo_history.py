@@ -38,6 +38,7 @@ def main():
                 source_url=url,
                 municipality="Agrigento",
                 observed_at=at,
+                extracted_at=at,
                 data_origin="synthetic",
             )
             reports.append(

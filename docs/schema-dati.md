@@ -45,6 +45,8 @@ restoration_confirmed, category, parser_version e data_origin.
 - `published_at`, `scheduled_at`, `resolved_at`: null per il layout attualmente letto.
   Il timestamp "Generato il" resta stringa documentale separata, non pubblicazione.
 - `first_seen_at` e `last_seen_at`: osservazioni della pipeline, non date del lavoro.
+- `extracted_at`: momento effettivo di esecuzione del parser, distinto dall'osservazione
+  anche nei replay di documenti già acquisiti. Nelle fixture è un tempo simulato esplicito.
 - `reported_status`: testo originale normalizzato solo negli spazi.
 - `validation_status`: validated oppure needs_review. Non significa verifica sul campo.
 - `category`: intervento_programmato, dalla sezione AICA; non equivale a guasto.

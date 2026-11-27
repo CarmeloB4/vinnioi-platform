@@ -76,7 +76,7 @@ class Store:
             CREATE TABLE IF NOT EXISTS source_documents(
                 document_id VARCHAR PRIMARY KEY, source_id VARCHAR NOT NULL,
                 source_url VARCHAR NOT NULL, document_hash VARCHAR NOT NULL,
-                municipality VARCHAR, first_fetched_at TIMESTAMPTZ,
+                municipality VARCHAR, first_observed_at TIMESTAMPTZ,
                 document_generated_at VARCHAR, parser_version VARCHAR, layout VARCHAR,
                 parse_complete BOOLEAN);
             CREATE TABLE IF NOT EXISTS intervention_observations(
@@ -211,7 +211,14 @@ class Store:
                 observed_at.isoformat(),
                 data_origin,
                 [
-                    (url, name, sha, result.model_dump(mode="json"))
+                    (
+                        url,
+                        name,
+                        sha,
+                        result.model_dump(
+                            mode="json", exclude={"rows": {"__all__": {"extracted_at"}}}
+                        ),
+                    )
                     for url, name, sha, result in documents
                 ],
             ]

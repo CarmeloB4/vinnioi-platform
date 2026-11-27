@@ -2,7 +2,7 @@
 
 import hashlib
 import re
-from datetime import datetime
+from datetime import UTC, datetime
 
 import pymupdf
 
@@ -29,8 +29,10 @@ def parse_interventions(
     municipality: str,
     observed_at: datetime,
     data_origin: str = "real",
+    extracted_at: datetime | None = None,
 ) -> ParseResult:
     result = ParseResult()
+    extracted_at = extracted_at or datetime.now(UTC)
     document_hash = hashlib.sha256(content).hexdigest()
     if observed_at.tzinfo is None:
         raise ValueError("Timestamp di osservazione privo di timezone")
@@ -110,7 +112,7 @@ def parse_interventions(
                                 last_seen_at=observed_at,
                                 source_url=source_url,
                                 document_hash=document_hash,
-                                extracted_at=observed_at,
+                                extracted_at=extracted_at,
                                 page_number=page_index + 1,
                                 row_number=row_index,
                                 issues=issues,

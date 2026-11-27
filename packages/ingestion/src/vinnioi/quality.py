@@ -67,7 +67,7 @@ def validate_rows(rows: list[Intervention], observed_at: datetime) -> list[Inter
             issues.add("inconsistent_dates")
         if (
             row.first_seen_at > row.last_seen_at
-            or row.extracted_at > observed_at
+            or row.extracted_at < row.last_seen_at
             or row.last_seen_at > observed_at
         ):
             issues.add("inconsistent_dates")

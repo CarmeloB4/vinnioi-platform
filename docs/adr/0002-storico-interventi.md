@@ -10,7 +10,11 @@ fonte sia globalmente unico. URL e hash dei byte identificano la versione docume
 Ogni run crea osservazioni immutabili e aggiorna una proiezione corrente: rileggere
 lo stesso hash non crea un altro documento, ma conferma la presenza e last_seen_at.
 
-Il replay con stesso run_id, timestamp e contenuto è idempotente. Un run_id riusato
+Il replay con stesso run_id, timestamp di osservazione e contenuto è idempotente.
+Il timestamp di estrazione effettiva è escluso dal fingerprint di retry: rielaborare
+lo stesso input più tardi non crea nuove osservazioni. La versione del parser e
+l'esito strutturale restano inclusi. first_observed_at del documento non pretende
+di essere la data di download di un file importato localmente. Un run_id riusato
 con altro contenuto è errore. Le acquisizioni sono ordinate nel tempo; i backfill
 si elaborano separatamente per non sovrascrivere lo stato corrente con dati vecchi.
 Non esiste un'identità stabile inventata per righe senza codice della fonte.

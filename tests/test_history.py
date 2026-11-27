@@ -24,7 +24,12 @@ def parsed(rows=None, *, at=AT, municipality="Agrigento", **kwargs):
         [rows if rows is not None else [synthetic_row()]], municipality=municipality, **kwargs
     )
     return parse_interventions(
-        pdf, source_url=URL, municipality=municipality, observed_at=at, data_origin="synthetic"
+        pdf,
+        source_url=URL,
+        municipality=municipality,
+        observed_at=at,
+        extracted_at=at,
+        data_origin="synthetic",
     )
 
 
@@ -368,3 +373,25 @@ def test_input_failure_keeps_existing_history_and_reports_error(store):
     assert all(value is None for value in report["field_completeness_percent"].values())
     assert len(store.records()) == 1
     assert store.connection.execute("select present from document_membership").fetchone()[0]
+
+
+def test_replay_keeps_real_extraction_time_without_duplicate_run(store):
+    content = synthetic_pdf([[synthetic_row()]])
+    first = parse_interventions(
+        content, source_url=URL, municipality="Agrigento", observed_at=AT, data_origin="synthetic"
+    )
+    assert first.rows[0].extracted_at > AT  # Estrazione attuale, osservazione precedente.
+    report = ingest(store, first, run_id="replay-times")
+    later = parse_interventions(
+        content,
+        source_url=URL,
+        municipality="Agrigento",
+        observed_at=AT,
+        data_origin="synthetic",
+        extracted_at=first.rows[0].extracted_at + timedelta(seconds=1),
+    )
+    assert ingest(store, later, run_id="replay-times") == report
+    assert (
+        store.connection.execute("select count(*) from intervention_observations").fetchone()[0]
+        == 1
+    )

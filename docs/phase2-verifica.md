@@ -49,7 +49,7 @@ separazione real/synthetic, round-trip degli export e CLI locale.
 
 La CI esegue Ruff lint/format, pytest, scenario sintetico, check e build web già presenti.
 Il report non considera un test sintetico come verifica di copertura di tutti i layout
-reali. Verifica locale finale: 39 test passati; Ruff lint e format superati; check Astro
+reali. Verifica locale finale: 40 test passati; Ruff lint e format superati; check Astro
 senza diagnostiche; build statica riuscita. Build wheel riuscita con risorse ISTAT
 incluse. PyMuPDF emette cinque DeprecationWarning SWIG, senza errori di test.
 L'esito della CI remota viene riportato nella PR.
