@@ -1,0 +1,54 @@
+{
+  "run_id": "phase2-agrigento-inspection",
+  "data_origin": "real",
+  "documents_analyzed": 1,
+  "interventions_extracted": 480,
+  "validated_records": 347,
+  "review_records": 133,
+  "errors": 0,
+  "document_errors": [],
+  "issue_counts": {
+    "address_placeholder": 133
+  },
+  "coverage_istat_codes": [
+    "084001"
+  ],
+  "administrative_municipalities": 43,
+  "covered_municipalities": 1,
+  "administrative_coverage_percent": 2.33,
+  "field_completeness_percent": {
+    "intervention_id": 100.0,
+    "source_id": 100.0,
+    "source_intervention_id": 100.0,
+    "municipality": 100.0,
+    "municipality_istat_code": 100.0,
+    "province": 100.0,
+    "address": 100.0,
+    "intervention_type": 100.0,
+    "network_type": 100.0,
+    "reported_status": 100.0,
+    "published_at": 0.0,
+    "scheduled_at": 0.0,
+    "first_seen_at": 100.0,
+    "last_seen_at": 100.0,
+    "resolved_at": 0.0,
+    "source_url": 100.0,
+    "document_hash": 100.0,
+    "extracted_at": 100.0,
+    "validation_status": 100.0,
+    "issues": 100.0,
+    "page_number": 100.0,
+    "row_number": 100.0,
+    "category": 100.0,
+    "restoration_confirmed": 100.0,
+    "parser_version": 100.0,
+    "data_origin": 100.0
+  },
+  "change_counts": {
+    "new": 347
+  },
+  "source_url": "https://www.aicaonline.it/interventi_programmati/interventi_agrigento.pdf",
+  "document_hash": "abb5a50a110ce5543caf7584ec4256af8f1d769453ca3c37c0837f92ad26b7fb",
+  "scope": "Ispezione tecnica limitata, non verifica indipendente degli eventi",
+  "publication_approved": false
+}

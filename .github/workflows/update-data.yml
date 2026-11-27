@@ -1,22 +1,84 @@
-name: Acquisizione dati (bloccata fino ad approvazione fonti)
+name: Storico AICA (disabilitato fino alla verifica delle fonti)
 on:
   workflow_dispatch:
-  # Attivare con PR solo dopo la checklist in docs/fonti.md:
+    inputs:
+      previous_run_id:
+        description: 'Run GitHub con artefatto vinnioi-history da ripristinare'
+        required: false
+        type: string
+      document_limit:
+        description: 'Numero massimo di documenti da acquisire (1-30)'
+        default: 1
+        type: number
+      initialize_history:
+        description: 'Inizializza esplicitamente un nuovo storico (solo prima esecuzione)'
+        default: false
+        type: boolean
+  # Attivare con PR solo dopo docs/fonti.md e verifica della conservazione dello storico:
   # schedule:
   #   - cron: '17 5 * * *' # UTC
 permissions:
   contents: read
+  actions: read
 concurrency:
   group: acquisizione-aica
   cancel-in-progress: false
 jobs:
   staging:
-    if: vars.SOURCES_VERIFIED == 'true'
+    # Doppio consenso documentato: acquisizione/riuso e conservazione su GitHub.
+    if: vars.SOURCES_VERIFIED == 'true' && vars.HISTORY_STORAGE_VERIFIED == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
       - run: uv sync --locked --no-dev
-      - run: uv run --no-dev vinnioi --limit 1
-      # Nessun upload dei documenti o del dataset: revisione e licenze da verificare.
+      - name: Verifica continuità storico e registro
+        env:
+          PREVIOUS_RUN_ID: ${{ inputs.previous_run_id }}
+          INITIALIZE_HISTORY: ${{ inputs.initialize_history }}
+        run: |
+          uv run python - <<'PY'
+          import os, tomllib
+          with open('config/sources.toml', 'rb') as stream:
+              source = tomllib.load(stream)['aica']
+          if not source['acquisition_approved'] or not source['redistribution_approved']:
+              raise SystemExit('Registro non approvato per acquisizione e riuso')
+          previous = os.environ['PREVIOUS_RUN_ID']
+          if previous and not previous.isdigit():
+              raise SystemExit('previous_run_id deve essere numerico')
+          if not previous and os.environ['INITIALIZE_HISTORY'] != 'true':
+              raise SystemExit('Specificare lo storico precedente oppure inizializzarlo esplicitamente')
+          if previous and os.environ['INITIALIZE_HISTORY'] == 'true':
+              raise SystemExit('Non inizializzare quando si ripristina uno storico')
+          PY
+      - name: Ripristina lo storico precedente
+        if: inputs.previous_run_id != ''
+        uses: actions/download-artifact@v4
+        with:
+          name: vinnioi-history
+          path: data/history
+          run-id: ${{ inputs.previous_run_id }}
+          github-token: ${{ github.token }}
+      - name: Acquisisci, riconcilia, valida ed esporta
+        id: ingest
+        env:
+          DOCUMENT_LIMIT: ${{ inputs.document_limit || 1 }}
+        run: uv run --no-dev vinnioi-history --limit "$DOCUMENT_LIMIT"
+      - name: Conserva database, revisioni ed export (mai PDF)
+        # Exit 2 per qualità non interrompe la conservazione di osservazioni e revisioni.
+        if: always() && steps.ingest.outcome != 'skipped' && hashFiles('data/history/vinnioi.duckdb') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: vinnioi-history
+          path: data/history/vinnioi.duckdb
+          retention-days: 30
+          if-no-files-found: error
+      - name: Conserva export locale approvato per lo storage
+        if: always() && steps.ingest.outcome != 'skipped' && hashFiles('data/exports/LATEST') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: vinnioi-staging-exports
+          path: data/exports/
+          retention-days: 30
+          if-no-files-found: error

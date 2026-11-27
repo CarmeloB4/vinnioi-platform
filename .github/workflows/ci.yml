@@ -16,6 +16,13 @@ jobs:
       - run: uv run ruff check .
       - run: uv run ruff format --check .
       - run: uv run pytest
+      - name: Scenario storico sintetico (nessuna fonte reale)
+        run: uv run python scripts/demo_history.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: synthetic-quality-report
+          path: data/demo-synthetic/summary.json
+          if-no-files-found: error
   web:
     runs-on: ubuntu-latest
     steps:

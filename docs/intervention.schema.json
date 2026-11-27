@@ -1,0 +1,247 @@
+{
+  "$defs": {
+    "ValidationStatus": {
+      "enum": [
+        "validated",
+        "needs_review"
+      ],
+      "title": "ValidationStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "intervention_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Intervention Id"
+    },
+    "source_id": {
+      "default": "aica",
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_intervention_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Intervention Id"
+    },
+    "municipality": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Municipality"
+    },
+    "municipality_istat_code": {
+      "anyOf": [
+        {
+          "pattern": "^084\\d{3}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Municipality Istat Code"
+    },
+    "province": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Province"
+    },
+    "address": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Address"
+    },
+    "intervention_type": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Intervention Type"
+    },
+    "network_type": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Network Type"
+    },
+    "reported_status": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Reported Status"
+    },
+    "published_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Published At"
+    },
+    "scheduled_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Scheduled At"
+    },
+    "first_seen_at": {
+      "format": "date-time",
+      "title": "First Seen At",
+      "type": "string"
+    },
+    "last_seen_at": {
+      "format": "date-time",
+      "title": "Last Seen At",
+      "type": "string"
+    },
+    "resolved_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Resolved At"
+    },
+    "source_url": {
+      "format": "uri",
+      "maxLength": 2083,
+      "minLength": 1,
+      "title": "Source Url",
+      "type": "string"
+    },
+    "document_hash": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Document Hash",
+      "type": "string"
+    },
+    "extracted_at": {
+      "format": "date-time",
+      "title": "Extracted At",
+      "type": "string"
+    },
+    "validation_status": {
+      "$ref": "#/$defs/ValidationStatus",
+      "default": "needs_review"
+    },
+    "issues": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Issues",
+      "type": "array"
+    },
+    "page_number": {
+      "minimum": 1,
+      "title": "Page Number",
+      "type": "integer"
+    },
+    "row_number": {
+      "minimum": 1,
+      "title": "Row Number",
+      "type": "integer"
+    },
+    "category": {
+      "default": "intervento_programmato",
+      "title": "Category",
+      "type": "string"
+    },
+    "restoration_confirmed": {
+      "default": false,
+      "title": "Restoration Confirmed",
+      "type": "boolean"
+    },
+    "parser_version": {
+      "default": "0.2.0",
+      "title": "Parser Version",
+      "type": "string"
+    },
+    "data_origin": {
+      "default": "real",
+      "title": "Data Origin",
+      "type": "string"
+    }
+  },
+  "required": [
+    "first_seen_at",
+    "last_seen_at",
+    "source_url",
+    "document_hash",
+    "extracted_at",
+    "page_number",
+    "row_number"
+  ],
+  "title": "Intervention",
+  "type": "object"
+}

@@ -27,3 +27,22 @@ Python 3.12 e uv; dipendenze bloccate in uv.lock. Dopo modifiche Python eseguire
 Dopo modifiche web eseguire `npm run check` e `npm run build`.
 I test devono restare offline, usare fixture sintetiche e coprire errori di formato,
 provenienza, regole di classificazione e blocchi di acquisizione.
+
+## Phase 2: storico e parser
+
+- La chiave interna combina ente, codice ISTAT e codice dell'intervento della fonte.
+- Non confondere `source_id` (ente) con `source_intervention_id` (codice AICA).
+- Interventi: proiezione corrente dei record strutturalmente validati. Osservazioni:
+  storico immutabile di quanto visto in un documento a una determinata acquisizione.
+- `COMPLETATO` riguarda il lavoro, non la disponibilità dell'acqua. Solo lo stato
+  esplicito `FORNITURA RIPRISTINATA` è riconosciuto come conferma; non assegnare
+  `resolved_at` al momento del download se la data della fonte non è disponibile.
+- Non riconciliare assenze su documenti incompleti, layout sconosciuti o con quarantena.
+- Righe con identificativi duplicati, indirizzi segnaposto, stati nuovi, comuni incerti
+  o provenienza incoerente devono rimanere in revisione.
+- I 43 comuni ISTAT rappresentano la copertura amministrativa. La presenza di un PDF
+  non certifica la copertura del gestore; `operator_coverage` resta unknown.
+- Non mescolare database sintetici e reali. Non sovrascrivere o cancellare uno storico.
+- Dopo modifiche allo storico eseguire anche la demo sintetica in una directory nuova.
+- Gli export locali non sono una pubblicazione. L'artefatto CI ordinario contiene solo
+  il report sintetico. Qualsiasi storage di dati reali richiede condizioni verificate.
