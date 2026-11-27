@@ -17,3 +17,8 @@ L'attivazione avviene con PR dedicata e motivazione sulle condizioni delle fonti
 Il frontend statico usa Tailwind 4 con plugin Vite e nessun adapter Cloudflare SSR:
 può essere pubblicato su Pages senza funzioni o servizi aggiuntivi. Non viene deployato
 in questa fase. Tutte queste scelte sono reversibili senza migrare dati pubblici.
+
+I lockfile devono usare registri pubblici: npmjs.org e pypi.org. Il registro npm
+è esplicitato in .npmrc per evitare che configurazioni locali di mirror autenticati
+rendano la CI dipendente dall'ambiente dello sviluppatore. L'installazione pulita
+con npm ci verifica anche gli hash dei pacchetti sul registro pubblico.
