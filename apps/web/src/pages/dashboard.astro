@@ -1,0 +1,247 @@
+---
+import Base from '../layouts/Base.astro';
+import EventCard from '../components/EventCard.astro';
+import Stats from '../components/Stats.astro';
+import TechnicalTable from '../components/TechnicalTable.astro';
+import { portal } from '../lib/adapter';
+import { municipalities, categoryNames, eventStatus, sourceNames } from '../lib/model';
+const events = portal.data.recent_events;
+const statuses = [...new Set(events.map(eventStatus))];
+const categories = Object.entries(categoryNames);
+---
+
+<Base title="Dashboard">
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">Esplora le osservazioni</p>
+      <h1>Dashboard dell’acqua</h1>
+      <p class="lead">
+        Filtra i disservizi raccontati dalle fonti. I numeri descrivono il dataset disponibile, non
+        tutte le criticità del territorio.
+      </p>
+    </header>
+    <Stats />
+    <section class="panel" style="margin-top:28px" aria-labelledby="filter-title">
+      <h2 id="filter-title" style="font-size:1.4rem;margin-bottom:24px">
+        Cerca nelle informazioni
+      </h2>
+      <form id="dashboard-filters">
+        <div class="filters">
+          <div>
+            <label for="filter-town">Comune</label>
+            <select id="filter-town" name="municipality">
+              <option value="">Tutti i comuni</option>
+              {municipalities.map((m) => (
+                <option value={m.code}>{m.name}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label for="filter-category">Tipologia di disservizio</label>
+            <select id="filter-category" name="category">
+              <option value="">Tutte le tipologie</option>
+              {categories.map(([value, name]) => (
+                <option value={value}>{name}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label for="filter-status">Stato dichiarato</label>
+            <select id="filter-status" name="status">
+              <option value="">Tutti gli stati</option>
+              {statuses.map((s) => (
+                <option value={s}>{s}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label for="filter-source">Fonte</label>
+            <select id="filter-source" name="source">
+              <option value="">Tutte le fonti</option>
+              {Object.entries(sourceNames).map(([value, name]) => (
+                <option value={value}>{name}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label for="filter-from">Pubblicati dal</label>
+            <input id="filter-from" type="date" name="from" />
+          </div>
+          <div>
+            <label for="filter-until">Pubblicati fino al</label>
+            <input id="filter-until" type="date" name="until" />
+          </div>
+        </div>
+        <div class="filters-footer">
+          <p id="filter-count" role="status" class="small muted">
+            {portal.state === 'empty'
+              ? 'Dati autorizzati non disponibili'
+              : `${events.length} eventi nelle fonti`}
+          </p>
+          <button class="btn secondary" type="reset">
+            Azzera filtri
+          </button>
+        </div>
+      </form>
+      <noscript>
+        <p class="notice" style="margin-top:15px">
+          I filtri interattivi richiedono JavaScript. Tutte le schede restano consultabili e le
+          pagine dei comuni sono disponibili dalla navigazione.
+        </p>
+      </noscript>
+    </section>
+    <section class="section">
+      <div class="section-title">
+        <h2>Disservizi e ripristini</h2>
+        <a href="/mappa/" class="text-link small">
+          Vista territoriale
+        </a>
+      </div>
+      <div class="grid-3" id="event-results">
+        {events.map((event) => (
+          <div data-event-id={event.event_id}>
+            <EventCard event={event} />
+          </div>
+        ))}
+      </div>
+      <div class="empty" id="filter-empty" hidden={events.length > 0}>
+        <h3>
+          {portal.state === 'empty'
+            ? 'Nessun dataset reale pubblicabile'
+            : 'Nessun risultato per questi filtri'}
+        </h3>
+        <p>
+          L’assenza di osservazioni non indica l’assenza di problemi. Prova un’altra selezione o
+          consulta le fonti originali.
+        </p>
+      </div>
+    </section>
+    <section class="grid-2" aria-label="Letture aggregate degli eventi">
+      <div class="panel">
+        <h2 style="font-size:1.4rem;margin-bottom:26px">Andamento delle pubblicazioni</h2>
+        <div id="time-chart"></div>
+        <p class="small muted" style="margin-top:22px">
+          Conteggi per data editoriale. Non rappresentano la durata dei disservizi.
+        </p>
+      </div>
+      <div class="panel">
+        <h2 style="font-size:1.4rem;margin-bottom:26px">Tipologie nel dataset</h2>
+        <div id="category-chart"></div>
+        <p class="small muted" style="margin-top:22px">
+          Le categorie possono coesistere nello stesso evento.
+        </p>
+      </div>
+    </section>
+    <section class="panel" style="margin-top:26px" aria-labelledby="territorial-chart-title">
+      <h2 id="territorial-chart-title" style="font-size:1.4rem;margin-bottom:26px">
+        Distribuzione territoriale
+      </h2>
+      <div id="territory-chart"></div>
+      <p class="small muted" style="margin-top:22px">
+        Comuni esplicitamente citati. Uno stesso evento può riguardare più comuni; il conteggio non
+        misura la qualità del servizio.
+      </p>
+    </section>
+    <section class="section">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">Un livello di lettura diverso</p>
+          <h2>Interventi tecnici</h2>
+        </div>
+      </div>
+      <p class="small muted" style="margin-bottom:18px">
+        Registro distinto dei lavori sulla rete. I filtri sopra riguardano i disservizi; consulta
+        una pagina comunale per i lavori del territorio.
+      </p>
+      <TechnicalTable rows={portal.data.technical_interventions} />
+    </section>
+  </div>
+  <script
+    id="dashboard-data"
+    type="application/json"
+    set:html={JSON.stringify({ events, mode: portal.mode }).replace(/</g, '\\u003c')}
+  />
+</Base>
+<script>
+  import { filterEvents, categoryNames, municipalities, type WaterEvent } from '../lib/model';
+  const data = JSON.parse(
+    document.querySelector('#dashboard-data')?.textContent || '{"events":[]}',
+  ) as { events: WaterEvent[]; mode: string };
+  const form = document.querySelector<HTMLFormElement>('#dashboard-filters')!;
+  function chart(selector: string, counts: Record<string, number>) {
+    const root = document.querySelector(selector)!;
+    root.replaceChildren();
+    const items = Object.entries(counts).sort(([a], [b]) => a.localeCompare(b));
+    if (!items.length) {
+      const p = document.createElement('p');
+      p.className = 'muted small';
+      p.textContent = 'Informazioni non disponibili per questa selezione.';
+      root.append(p);
+      return;
+    }
+    const list = document.createElement('ul');
+    list.className = 'chart-bars';
+    const max = Math.max(...Object.values(counts));
+    for (const [name, count] of items) {
+      const li = document.createElement('li'),
+        label = document.createElement('span'),
+        track = document.createElement('span'),
+        bar = document.createElement('span'),
+        value = document.createElement('strong');
+      label.textContent = name;
+      track.className = 'bar-track';
+      track.setAttribute('aria-hidden', 'true');
+      bar.className = 'bar-fill';
+      bar.style.width = `${(count / max) * 100}%`;
+      bar.style.display = 'block';
+      track.append(bar);
+      value.textContent = String(count);
+      li.append(label, track, value);
+      list.append(li);
+    }
+    root.append(list);
+  }
+  function update() {
+    const values = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
+    const result = filterEvents(data.events, values);
+    const ids = new Set(result.map((e) => e.event_id));
+    document
+      .querySelectorAll<HTMLElement>('[data-event-id]')
+      .forEach((el) => (el.hidden = !ids.has(el.dataset.eventId!)));
+    document.querySelector<HTMLElement>('#filter-empty')!.hidden = result.length > 0;
+    document.querySelector('#filter-count')!.textContent = data.events.length
+      ? `${result.length} eventi corrispondenti${data.mode === 'demo' ? ' · dati sintetici' : ''}`
+      : 'Dati autorizzati non disponibili';
+    const dates: Record<string, number> = {},
+      types: Record<string, number> = {},
+      territories: Record<string, number> = {};
+    for (const e of result) {
+      if (e.published_on) dates[e.published_on] = (dates[e.published_on] || 0) + 1;
+      for (const c of e.categories) types[categoryNames[c]] = (types[categoryNames[c]] || 0) + 1;
+    }
+    for (const event of result)
+      for (const code of event.municipality_istat_codes) {
+        const name = municipalities.find((m) => m.code === code)!.name;
+        territories[name] = (territories[name] || 0) + 1;
+      }
+    chart('#territory-chart', territories);
+    chart('#time-chart', dates);
+    chart('#category-chart', types);
+    const params = new URLSearchParams(Object.entries(values).filter(([, v]) => v));
+    history.replaceState(
+      null,
+      '',
+      location.pathname + (params.size ? '?' + params.toString() : ''),
+    );
+  }
+  const params = new URLSearchParams(location.search);
+  for (const key of ['municipality', 'category', 'status', 'source', 'from', 'until']) {
+    const control = form.elements.namedItem(key) as HTMLInputElement | null;
+    if (control && params.has(key)) control.value = params.get(key)!;
+  }
+  form.addEventListener('submit', (e) => e.preventDefault());
+  form.addEventListener('input', update);
+  form.addEventListener('change', update);
+  form.addEventListener('reset', () => setTimeout(update, 0));
+  update();
+</script>

@@ -1,0 +1,45 @@
+---
+import {
+  categoryNames,
+  eventStatus,
+  formatDate,
+  municipalities,
+  sourceNames,
+  type WaterEvent,
+} from '../lib/model';
+interface Props {
+  event: WaterEvent;
+}
+const { event } = Astro.props;
+---
+
+<article class="event-card">
+  <div class="tags">
+    <span
+      class:list={[
+        'badge',
+        event.restoration_confirmed ? 'confirmed' : event.restoration_expected_on ? 'planned' : '',
+      ]}
+    >
+      {event.restoration_confirmed ? 'Ripristino dichiarato' : categoryNames[event.categories[0]]}
+    </span>
+    {event.validation_status === 'needs_review' && (
+      <span class="badge planned">Da revisionare</span>
+    )}
+  </div>
+  <h3>
+    <a href={`/eventi/${event.event_id}/`}>{event.title}</a>
+  </h3>
+  <p class="small muted">
+    {event.municipality_istat_codes
+      .map((code) => municipalities.find((m) => m.code === code)?.name)
+      .join(', ') || 'Area non determinata'}
+  </p>
+  <p class="small" style="margin-top:10px">
+    {eventStatus(event)}
+  </p>
+  <footer>
+    <span>{sourceNames[event.source_id]}</span>
+    <time datetime={event.published_on || undefined}>{formatDate(event.published_on)}</time>
+  </footer>
+</article>

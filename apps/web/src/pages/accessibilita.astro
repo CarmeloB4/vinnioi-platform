@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Accessibilità">
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">Accesso alle informazioni</p>
+      <h1>Un portale leggibile e navigabile.</h1>
+    </header>
+    <article class="prose">
+      <p>
+        Il portale è progettato per l’uso da tastiera, con collegamento per saltare la navigazione,
+        focus visibile, etichette dei filtri e gerarchia dei titoli. Le informazioni aggregate sono
+        disponibili come testo e conteggi, senza dipendere soltanto dal colore.
+      </p>
+      <h2>Mappe e grafici</h2>
+      <p>
+        La mappa interattiva è opzionale. Puoi selezionare i comuni con un menu e consultare
+        l’elenco testuale con gli stessi conteggi. Se WebGL o JavaScript non sono disponibili, le
+        pagine comunali e l’elenco restano accessibili.
+      </p>
+      <h2>Verifiche e limiti</h2>
+      <p>
+        Le verifiche automatiche e manuali disponibili sono documentate nella repository. Non
+        costituiscono una certificazione completa di conformità WCAG 2.2 AA; il portale richiede
+        ulteriori prove con tecnologie assistive e utenti.
+      </p>
+      <p>
+        Puoi proporre correzioni nella{' '}
+        <a href="https://github.com/CarmeloB4/vinnioi-platform">repository del progetto</a>, senza
+        includere dati personali.
+      </p>
+    </article>
+  </div>
+</Base>

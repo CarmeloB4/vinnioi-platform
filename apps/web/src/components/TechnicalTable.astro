@@ -1,0 +1,47 @@
+---
+import type { Technical } from '../lib/model';
+import Empty from './Empty.astro';
+import { formatDate } from '../lib/model';
+interface Props {
+  rows: Technical[];
+}
+const { rows } = Astro.props;
+---
+
+{rows.length ? (
+  <div class="table-wrap">
+    <table>
+      <caption>
+        Interventi tecnici dichiarati. Un lavoro completato non conferma il ripristino della
+        fornitura.
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">Intervento</th>
+          <th scope="col">Comune</th>
+          <th scope="col">Stato del lavoro</th>
+          <th scope="col">Osservato il</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr>
+            <td>
+              <a class="text-link" href={`/interventi/${r.intervention_id}/`}>
+                {r.intervention_type || 'Tipo non disponibile'}
+              </a>
+              <p class="small muted">{r.network_type || 'Rete non disponibile'}</p>
+            </td>
+            <td>{r.municipality || 'Non determinato'}</td>
+            <td>
+              <span class="badge technical">{r.reported_status || 'Non disponibile'}</span>
+            </td>
+            <td>{formatDate(r.last_seen_at)}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+) : (
+  <Empty title="Nessun intervento pubblicabile" />
+)}

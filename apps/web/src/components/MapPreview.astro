@@ -1,0 +1,28 @@
+---
+import { readFileSync } from 'node:fs';
+const geo = JSON.parse(readFileSync(`${process.cwd()}/public/data/municipalities.geojson`, 'utf8'));
+const paths = geo.features
+  .filter((f: any) => f.properties.code !== '084020')
+  .map((f: any) => {
+    const rings = f.geometry.type === 'Polygon' ? [f.geometry.coordinates] : f.geometry.coordinates;
+    const points = rings
+      .flat(1)
+      .map((ring: number[][]) => ring.map(([x, y]) => [x * 100, -y * 125]));
+    return {
+      code: f.properties.code,
+      d: points
+        .map(
+          (r: number[][]) =>
+            r.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(2)},${y.toFixed(2)}`).join(' ') + 'Z',
+        )
+        .join(' '),
+    };
+  });
+---
+
+<svg viewBox="1265 -4755 150 155" role="img" aria-labelledby="map-preview-title">
+  <title id="map-preview-title">Confini comunali dell’agrigentino. Le isole Pelagie sono disponibili nella mappa completa.</title>
+  {paths.map((p: any) => (
+    <path d={p.d} fill="#bfd8e7" stroke="#668fa8" stroke-width=".35" />
+  ))}
+</svg>

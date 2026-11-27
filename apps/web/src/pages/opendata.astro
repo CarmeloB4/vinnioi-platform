@@ -1,0 +1,100 @@
+---
+import Base from '../layouts/Base.astro';
+import { portal } from '../lib/adapter';
+---
+
+<Base title="Open data">
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">Dati, fonti e condizioni di utilizzo</p>
+      <h1>Open data, con responsabilità.</h1>
+      <p class="lead">
+        Trasparenza significa sapere da dove arriva un dato, cosa descrive e quando può essere
+        riutilizzato.
+      </p>
+    </header>
+    <div class="notice warning">
+      I dataset operativi AICA e Siciliacque non hanno ancora una licenza di redistribuzione
+      qualificata. Gli export locali della pipeline non sono automaticamente pubblicabili.
+    </div>
+    <section class="section">
+      <h2 style="margin-bottom:26px">Download disponibili</h2>
+      <div class="grid-2">
+        <article class="panel">
+          <span class="badge">CC BY 4.0</span>
+          <h3 style="margin-top:20px">Anagrafica dei 43 comuni</h3>
+          <p class="small muted" style="margin-top:14px">
+            Fonte ISTAT. Codici e denominazioni ufficiali, selezione della provincia di Agrigento.
+            Non certifica la copertura del gestore.
+          </p>
+          <div class="actions">
+            <a class="btn secondary" href="/api/municipalities.json" download>
+              Scarica JSON
+            </a>
+          </div>
+        </article>
+        <article class="panel">
+          <span class="badge">CC BY 4.0</span>
+          <h3 style="margin-top:20px">Confini comunali</h3>
+          <p class="small muted" style="margin-top:14px">
+            Fonte ISTAT 2026. Generalizzazione originale, riproiezione EPSG:4326 e selezione AG.
+            Solo fini statistici.
+          </p>
+          <div class="actions">
+            <a class="btn secondary" href="/data/municipalities.geojson" download>
+              Scarica GeoJSON
+            </a>
+            <a href="/data/municipalities.provenance.json" class="text-link small">
+              Provenienza e hash
+            </a>
+          </div>
+        </article>
+        {portal.mode === 'demo' && (
+          <article class="panel">
+            <span class="badge planned">Solo demo</span>
+            <h3 style="margin-top:20px">Eventi sintetici dimostrativi</h3>
+            <p class="small muted" style="margin-top:14px">
+              Dati fittizi per esplorare il portale, senza corrispondenza con eventi reali. Non
+              usarli per valutare il servizio.
+            </p>
+            <div class="actions">
+              <a class="btn secondary" href="/api/demo-events.json" download>
+                Scarica demo JSON
+              </a>
+            </div>
+          </article>
+        )}
+        {portal.mode === 'production' && portal.state === 'ready' && (
+          <article class="panel">
+            <h3>Eventi autorizzati</h3>
+            <p class="small muted">
+              Pubblicazione sottoposta a verifica del dataset e delle autorizzazioni per fonte.
+            </p>
+            <div class="actions">
+              <a class="btn secondary" href="/api/water-events.json" download>
+                Scarica JSON
+              </a>
+            </div>
+          </article>
+        )}
+      </div>
+    </section>
+    <div class="prose">
+      <h2>Formati e licenze</h2>
+      <p>
+        La pipeline produce CSV, JSON e Parquet per analisi locali e tracciabilità. I dati
+        pubblicati qui sono soltanto quelli con condizioni di riutilizzo verificate. La licenza MIT
+        riguarda il codice, non i documenti delle fonti.
+      </p>
+      <p>
+        Attribuzione dei riferimenti territoriali: ISTAT, elaborazione Vinnioi. L’anagrafica è un
+        sottoinsieme dell’elenco ufficiale; le geometrie sono riproiettate dai confini generalizzati
+        2026. Consulta le <a href="https://www.istat.it/note-legali/">note legali ISTAT</a>.
+      </p>
+      <p>
+        <a href="/metodologia/">Leggi la metodologia</a> per distinguere dati mancanti, lavori e
+        disservizi.
+      </p>
+    </div>
+  </div>
+</Base>

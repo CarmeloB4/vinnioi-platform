@@ -1,0 +1,56 @@
+---
+import Base from '../../layouts/Base.astro';
+import { municipalities } from '../../lib/model';
+---
+
+<Base title="I comuni">
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">Il territorio, comune per comune</p>
+      <h1>43 comuni. Una lettura condivisa.</h1>
+      <p class="lead">
+        L’anagrafica comprende tutti i comuni dell’agrigentino. Non coincide con la copertura
+        effettiva del gestore, che resta da verificare.
+      </p>
+    </header>
+    <div style="max-width:520px;margin-bottom:28px">
+      <label for="town-query">Trova un comune</label>
+      <input type="search" id="town-query" placeholder="Nome del comune" autocomplete="off" />
+      <p id="town-count" class="small muted" role="status" style="margin-top:10px">
+        43 comuni nell’anagrafica ISTAT
+      </p>
+    </div>
+    <div class="municipal-grid" id="town-list">
+      {municipalities.map((m) => (
+        <a class="municipal-link" href={`/comuni/${m.slug}/`} data-name={m.name}>
+          <strong>{m.name}</strong>
+          <span>ISTAT {m.code} · Copertura da verificare</span>
+        </a>
+      ))}
+    </div>
+    <p class="notice" id="town-empty" hidden>
+      Nessun comune corrispondente. Prova con il nome completo o consulta l’elenco.
+    </p>
+  </div>
+</Base>
+<script>
+  const input = document.querySelector<HTMLInputElement>('#town-query')!;
+  const normalize = (s: string) =>
+    s
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase();
+  function search() {
+    const q = normalize(input.value);
+    let count = 0;
+    document.querySelectorAll<HTMLElement>('[data-name]').forEach((el) => {
+      el.hidden = !normalize(el.dataset.name!).includes(q);
+      if (!el.hidden) count++;
+    });
+    document.querySelector('#town-count')!.textContent = `${count} comuni corrispondenti`;
+    document.querySelector<HTMLElement>('#town-empty')!.hidden = count > 0;
+  }
+  input.value = new URLSearchParams(location.search).get('q') || '';
+  input.addEventListener('input', search);
+  search();
+</script>

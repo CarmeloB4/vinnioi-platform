@@ -1,1 +1,10 @@
-{"extends":"astro/tsconfigs/strict"}
+{
+  "extends": "astro/tsconfigs/strict",
+  "exclude": [
+    "dist",
+    "dist-demo",
+    "node_modules",
+    "test-results",
+    "playwright-report"
+  ]
+}

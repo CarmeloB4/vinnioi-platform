@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Metodologia">
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">Come leggere le informazioni</p>
+      <h1>Il dato, con il suo contesto.</h1>
+      <p class="lead">
+        Ogni osservazione deve poter essere ricondotta a una fonte, una versione e una data. Le
+        informazioni mancanti restano tali.
+      </p>
+    </header>
+    <article class="prose">
+      <h2>Interventi e disservizi sono distinti</h2>
+      <p>
+        Un intervento programmato è un lavoro tecnico. Un disservizio è una situazione descritta
+        dalla fonte che può riguardare interruzioni, guasti o riduzioni di portata. Non trasformiamo
+        automaticamente ogni lavoro in un guasto.
+      </p>
+      <h2>Tre stati da non confondere</h2>
+      <ul>
+        <li>
+          <strong>Ripristino previsto:</strong> una previsione, anche quando contiene un orario
+          preciso.
+        </li>
+        <li>
+          <strong>Lavoro completato:</strong> stato dell’attività tecnica, senza conferma della
+          disponibilità d’acqua.
+        </li>
+        <li>
+          <strong>Fornitura ripristinata, dichiarata:</strong> una conferma esplicita della fonte,
+          che non equivale a una verifica indipendente sul campo.
+        </li>
+      </ul>
+      <h2>Osservazioni nel tempo</h2>
+      <p>
+        Conserviamo versioni e variazioni delle informazioni. La scomparsa di una riga da un
+        documento non conferma la soluzione del problema. La data di acquisizione non è la data
+        dell’evento; un aggiornamento della pipeline non rende più recente la fonte.
+      </p>
+      <h2>Qualità e revisione</h2>
+      <p>
+        I record con comuni incerti, stati sconosciuti, duplicati o errori di parsing richiedono
+        revisione. Le decisioni sui record tecnici sono tracciate. Il civico segnaposto 99999 resta
+        non disponibile, senza invalidare da solo l’intervento.
+      </p>
+      <h2>Turnazioni e mappe</h2>
+      <p>
+        Mostriamo turni soltanto quando hanno date complete e sono validati. Un turno programmato
+        non prova l’erogazione effettiva. La mappa aggrega gli eventi per confine comunale, senza
+        inventare posizioni puntuali.
+      </p>
+      <h2>Correlazioni e limiti</h2>
+      <p>
+        Articoli di enti diversi possono descrivere fatti collegati. Le associazioni automatiche
+        restano candidate motivate: non fondiamo eventi ambigui e non trasferiamo un ripristino da
+        una fonte all’altra.
+      </p>
+      <h2>Due modalità, sempre distinte</h2>
+      <p>
+        La demo contiene esclusivamente dati sintetici ed è identificata in ogni pagina. La
+        produzione accetta solo dati reali, validati e con autorizzazione di pubblicazione associata
+        al loro hash. Se mancano, mostra uno stato informativo senza numeri inventati.
+      </p>
+      <p>
+        <a href="https://github.com/CarmeloB4/vinnioi-platform">
+          Codice, ADR e documentazione tecnica
+        </a>{' '}
+        sono consultabili nella repository.
+      </p>
+    </article>
+  </div>
+</Base>

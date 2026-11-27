@@ -37,4 +37,16 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
+      - run: npm run test:web
       - run: npm run build
+      - name: Browser Chromium per test locali della build statica
+        run: npm exec -w apps/web -- playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: web-browser-verification
+          path: |
+            apps/web/test-results/
+            docs/screenshots/phase4-*.png
+          if-no-files-found: warn

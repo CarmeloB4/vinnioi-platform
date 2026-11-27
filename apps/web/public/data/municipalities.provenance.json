@@ -1,0 +1,11 @@
+{
+  "source": "ISTAT",
+  "reference_date": "2026-01-01",
+  "url": "https://www.istat.it/storage/cartografia/confini_amministrativi/generalizzati/2026/Limiti01012026_g.zip",
+  "archive_sha256": "b011a590656c3a3ebc297fba80726a376aa843b6f164641cf6a4a990021a81d6",
+  "geojson_sha256": "0d4f150a269ec87bb7515547f96de796f67ca4bfa620819767594a1ac4c7da69",
+  "license": "CC BY 4.0",
+  "license_url": "https://www.istat.it/note-legali/",
+  "attribution": "Fonte: ISTAT, confini amministrativi generalizzati 2026; elaborazione Vinnioi: selezione AG, riproiezione EPSG:4326 e arrotondamento a 5 decimali. Confini ai soli fini statistici.",
+  "features": 43
+}

@@ -1,0 +1,303 @@
+[
+  {
+    "municipality_istat_code": "084001",
+    "municipality": "Agrigento",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084002",
+    "municipality": "Alessandria della Rocca",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084003",
+    "municipality": "Aragona",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084004",
+    "municipality": "Bivona",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084005",
+    "municipality": "Burgio",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084006",
+    "municipality": "Calamonaci",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084007",
+    "municipality": "Caltabellotta",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084008",
+    "municipality": "Camastra",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084009",
+    "municipality": "Cammarata",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084010",
+    "municipality": "Campobello di Licata",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084011",
+    "municipality": "Canicattì",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084012",
+    "municipality": "Casteltermini",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084013",
+    "municipality": "Castrofilippo",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084014",
+    "municipality": "Cattolica Eraclea",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084015",
+    "municipality": "Cianciana",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084016",
+    "municipality": "Comitini",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084017",
+    "municipality": "Favara",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084018",
+    "municipality": "Grotte",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084019",
+    "municipality": "Joppolo Giancaxio",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084020",
+    "municipality": "Lampedusa e Linosa",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084021",
+    "municipality": "Licata",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084022",
+    "municipality": "Lucca Sicula",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084023",
+    "municipality": "Menfi",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084024",
+    "municipality": "Montallegro",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084025",
+    "municipality": "Montevago",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084026",
+    "municipality": "Naro",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084027",
+    "municipality": "Palma di Montechiaro",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084028",
+    "municipality": "Porto Empedocle",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084029",
+    "municipality": "Racalmuto",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084030",
+    "municipality": "Raffadali",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084031",
+    "municipality": "Ravanusa",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084032",
+    "municipality": "Realmonte",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084033",
+    "municipality": "Ribera",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084034",
+    "municipality": "Sambuca di Sicilia",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084035",
+    "municipality": "San Biagio Platani",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084036",
+    "municipality": "San Giovanni Gemini",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084037",
+    "municipality": "Santa Elisabetta",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084038",
+    "municipality": "Santa Margherita di Belice",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084039",
+    "municipality": "Sant'Angelo Muxaro",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084040",
+    "municipality": "Santo Stefano Quisquina",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084041",
+    "municipality": "Sciacca",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084042",
+    "municipality": "Siculiana",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  },
+  {
+    "municipality_istat_code": "084043",
+    "municipality": "Villafranca Sicula",
+    "province": "AG",
+    "province_istat_code": "084",
+    "operator_coverage": "unknown"
+  }
+]

@@ -24,7 +24,8 @@ indipendente e apartitico. Mantenere la licenza MIT esistente.
 
 Python 3.12 e uv; dipendenze bloccate in uv.lock. Dopo modifiche Python eseguire
 `uv run ruff check .`, `uv run ruff format --check .` e `uv run pytest`.
-Dopo modifiche web eseguire `npm run check` e `npm run build`.
+Dopo modifiche web eseguire `npm run check`, `npm run test:web`, `npm run build`
+e `npm run test:e2e` (Chromium Playwright installato).
 I test devono restare offline, usare fixture sintetiche e coprire errori di formato,
 provenienza, regole di classificazione e blocchi di acquisizione.
 
@@ -69,4 +70,18 @@ provenienza, regole di classificazione e blocchi di acquisizione.
 - Contratti frontend: publication_approved=false e fixture soltanto sintetiche.
   Non copiare database, evidenze o indirizzi tecnici nelle directory pubbliche.
 - Dopo modifiche Phase 3 eseguire anche scripts/demo_integration.py in directory nuova;
-  comprende backup e restore locali verificati. Nessuna dashboard completa in questa fase.
+  comprende backup e restore locali verificati.
+
+## Phase 4: portale pubblico
+
+- Produzione è la modalità predefinita; senza input autorizzati mostra uno stato vuoto.
+- Demo soltanto esplicita, con banner globale e noindex; mai su main o destinazione production.
+- Non promuovere la fixture modificando flag. I dati reali richiedono revisione, permessi
+  per fonte e manifest separato legato all'hash dei byte; vedere docs/phase4-web.md.
+- Non copiare input operativi, manifest, database o indirizzi nelle directory pubbliche.
+- Le geometrie comunali derivano da ISTAT CC BY 4.0, con provenienza e hash versionati.
+  Non inventare coordinate degli eventi né dedurre copertura o stato del servizio dalla mappa.
+- Mantenere i 43 percorsi comunali anche quando non esistono osservazioni pubblicabili.
+- Il logo ufficiale resta uno slot: non ridisegnarlo. Nessuna pubblicazione o modifica DNS
+  è autorizzata dalla sola preparazione della configurazione Cloudflare Pages.
+- Screenshot e test browser usano fixture sintetiche oppure produzione vuota, mai dati reali.

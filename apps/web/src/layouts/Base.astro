@@ -1,0 +1,137 @@
+---
+import '../styles/global.css';
+import { portal } from '../lib/adapter';
+const {
+  title = 'L’acqua, attraverso i dati.',
+  description = 'Osservatorio civico indipendente sull’acqua nella provincia di Agrigento.',
+} = Astro.props;
+const path = Astro.url.pathname;
+const canonical = new URL(path, 'https://vinnioi.it');
+const links = [
+  ['/', 'Panoramica'],
+  ['/dashboard/', 'Dashboard'],
+  ['/comuni/', 'Comuni'],
+  ['/mappa/', 'Mappa'],
+  ['/opendata/', 'Open data'],
+];
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title} · Vinnioi</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={`${title} · Vinnioi`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:url" content={canonical} />
+    <meta name="theme-color" content="#0B3452" />
+    {portal.mode === 'demo' && <meta name="robots" content="noindex,nofollow" />}
+    <slot name="head" />
+  </head>
+  <body data-mode={portal.mode}>
+    <a class="skip" href="#contenuto">
+      Vai al contenuto
+    </a>
+    <div class="utility">
+      <div class="wrap">
+        <span>Osservatorio civico indipendente · Provincia di Agrigento</span>
+        <span class="utility-extra">Open source · Apartitico</span>
+      </div>
+    </div>
+    {portal.mode === 'demo' && (
+      <div class="demo-strip">
+        <div class="wrap">
+          <strong>Modalità demo.</strong> Eventi e indicatori sono sintetici, a scopo dimostrativo.
+          Non descrivono la situazione reale.
+        </div>
+      </div>
+    )}
+    <header class="header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="/" aria-label="Vinnioi, pagina iniziale" data-logo-slot>
+          vinnioi<span>.</span>
+        </a>
+        <button
+          class="nav-toggle"
+          aria-controls="navigazione"
+          aria-expanded="false"
+          id="menu-toggle"
+        >
+          Menu
+        </button>
+        <nav class="nav" id="navigazione" aria-label="Navigazione principale">
+          {links.map(([href, label]) => (
+            <a href={href} aria-current={path === href ? 'page' : undefined}>
+              {label}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </header>
+    <main id="contenuto">
+      <slot />
+    </main>
+    <footer class="footer">
+      <div class="wrap">
+        <div class="footer-top">
+          <div>
+            <a href="/" class="wordmark" aria-label="Vinnioi, pagina iniziale">
+              vinnioi<span>.</span>
+            </a>
+            <p class="muted small" style="max-width:420px;margin-top:16px">
+              L’acqua, attraverso i dati.
+              <br />
+              Un progetto civico indipendente per leggere le informazioni sul servizio idrico
+              nell’agrigentino.
+            </p>
+          </div>
+          <div>
+            <h2>Il progetto</h2>
+            <ul>
+              <li>
+                <a href="/chi-siamo/">Chi siamo</a>
+              </li>
+              <li>
+                <a href="/metodologia/">Metodologia</a>
+              </li>
+              <li>
+                <a href="/fonti/">Fonti e copertura</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h2>Dati e codice</h2>
+            <ul>
+              <li>
+                <a href="/opendata/">Open data</a>
+              </li>
+              <li>
+                <a href="https://github.com/CarmeloB4/vinnioi-platform">Repository GitHub</a>
+              </li>
+              <li>
+                <a href="/accessibilita/">Accessibilità</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>Vinnioi non è un servizio ufficiale del gestore idrico.</p>
+          <p>Codice MIT · Dati secondo le rispettive licenze</p>
+        </div>
+      </div>
+    </footer>
+    <script>
+      const toggle = document.querySelector<HTMLButtonElement>('#menu-toggle');
+      toggle?.addEventListener('click', () => {
+        const expanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', String(!expanded));
+        document.querySelector('#navigazione')?.classList.toggle('is-open', !expanded);
+      });
+    </script>
+  </body>
+</html>
