@@ -1,0 +1,25 @@
+# La raggiungibilità pubblica non costituisce autorizzazione al riuso.
+[aica]
+url = "https://www.aicaonline.it/interventi-programmati/"
+checked_on = "2026-11-27"
+acquisition_approved = false
+redistribution_approved = false
+review = "Verificare condizioni, licenza dei PDF e robots prima di approvare."
+
+[siciliacque]
+url = "https://www.siciliacque.it/"
+checked_on = "2026-11-27"
+acquisition_approved = false
+redistribution_approved = false
+
+[ati_ag9]
+url = "https://www.atiag9.it/"
+checked_on = "2026-11-27"
+acquisition_approved = false
+redistribution_approved = false
+
+[regione_siciliana]
+url = "https://www.regione.sicilia.it/"
+checked_on = "2026-11-27"
+acquisition_approved = false
+redistribution_approved = false

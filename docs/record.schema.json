@@ -1,0 +1,145 @@
+{
+  "$defs": {
+    "Category": {
+      "enum": [
+        "guasto",
+        "intervento_programmato",
+        "ripristino_confermato",
+        "non_classificato"
+      ],
+      "title": "Category",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Id",
+      "type": "string"
+    },
+    "source": {
+      "default": "aica",
+      "title": "Source",
+      "type": "string"
+    },
+    "source_url": {
+      "format": "uri",
+      "maxLength": 2083,
+      "minLength": 1,
+      "title": "Source Url",
+      "type": "string"
+    },
+    "discovered_at": {
+      "format": "date-time",
+      "title": "Discovered At",
+      "type": "string"
+    },
+    "fetched_at": {
+      "format": "date-time",
+      "title": "Fetched At",
+      "type": "string"
+    },
+    "published_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Published At"
+    },
+    "event_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Event At"
+    },
+    "comune": {
+      "minLength": 1,
+      "title": "Comune",
+      "type": "string"
+    },
+    "area": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Area"
+    },
+    "category": {
+      "$ref": "#/$defs/Category"
+    },
+    "declared_status": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Declared Status"
+    },
+    "evidence": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Evidence"
+    },
+    "content_sha256": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Content Sha256",
+      "type": "string"
+    },
+    "parser_version": {
+      "default": "0.1.0",
+      "title": "Parser Version",
+      "type": "string"
+    },
+    "review_required": {
+      "default": true,
+      "title": "Review Required",
+      "type": "boolean"
+    },
+    "redistribution_allowed": {
+      "default": false,
+      "title": "Redistribution Allowed",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "id",
+    "source_url",
+    "discovered_at",
+    "fetched_at",
+    "comune",
+    "category",
+    "content_sha256"
+  ],
+  "title": "Record",
+  "type": "object"
+}

@@ -221,3 +221,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Vinnioi: documenti terzi e risultati locali
+.node_modules/
+node_modules/
+apps/web/dist/
+apps/web/.astro/
+data/
+.env

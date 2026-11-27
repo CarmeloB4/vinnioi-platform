@@ -1,0 +1,22 @@
+name: Acquisizione dati (bloccata fino ad approvazione fonti)
+on:
+  workflow_dispatch:
+  # Attivare con PR solo dopo la checklist in docs/fonti.md:
+  # schedule:
+  #   - cron: '17 5 * * *' # UTC
+permissions:
+  contents: read
+concurrency:
+  group: acquisizione-aica
+  cancel-in-progress: false
+jobs:
+  staging:
+    if: vars.SOURCES_VERIFIED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --locked --no-dev
+      - run: uv run --no-dev vinnioi --limit 1
+      # Nessun upload dei documenti o del dataset: revisione e licenze da verificare.
