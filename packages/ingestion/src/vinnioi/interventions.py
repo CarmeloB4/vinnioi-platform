@@ -21,7 +21,11 @@ class Intervention(BaseModel):
     municipality: str | None = None
     municipality_istat_code: str | None = Field(default=None, pattern=r"^084\d{3}$")
     province: str | None = None
+    area: str | None = None
     address: str | None = None
+    address_original: str | None = None
+    house_number: str | None = None
+    address_quality: str = "not_assessed"
     intervention_type: str | None = None
     network_type: str | None = None
     reported_status: str | None = None
@@ -39,7 +43,7 @@ class Intervention(BaseModel):
     row_number: int = Field(ge=1)
     category: str = "intervento_programmato"
     restoration_confirmed: bool = False
-    parser_version: str = "0.2.0"
+    parser_version: str = "0.3.0"
     data_origin: str = "real"
 
 

@@ -92,3 +92,35 @@ causa errore e non avvia uno storico nuovo. La retention di 30 giorni richiede b
 esterno approvato e una procedura per la continuità. Il cron non si abilita finché
 non sono risolti storage durevole e recupero dello storico. Nessun workflow reale
 è stato avviato durante questa fase.
+
+## Phase 3: canali qualificati e copertura osservata
+
+La nuova CLI separa aica_communications, siciliacque_notices e aica_turnations;
+tutti restano non approvati. La qualifica tecnica comprende gli indici HTML AICA
+(10 collegamenti nella prima pagina) e [avvisi Siciliacque](https://www.siciliacque.it/avvisi/)
+(12 collegamenti), un articolo operativo per ente e la struttura dei calendari.
+Non è una scansione completa degli archivi. I nuovi PDF campione sono Sciacca
+(214 righe) e Licata extra urbana (3 righe). La variante del titolo extraurbano è
+accettata solo in corrispondenza del comune Licata e del relativo URL specifico.
+
+Il calendario osservato contiene blocchi per 33 comuni ISTAT riconosciuti, mentre
+l'indice PDF ne contiene 29 unici. Le sottozone esplicitamente intitolate AGRIGENTO
+mantengono il comune e una district separata; UTENZE VOLTANO resta senza comune.
+La pagina [L'Azienda](https://www.aicaonline.it/lazienda/) elenca i comuni fondatori,
+non un perimetro contrattuale corrente certificato. Non si sovrappongono questi
+elenchi e non si marca la copertura amministrativa come copertura del gestore.
+
+I comuni coinvolti negli eventi sono estratti dal contenuto operativo. I nomi nelle
+condotte composte non attribuiscono impatto. Siciliacque è trattata con evidenza di
+adduzione quando il testo parla di acquedotti/adduttori, senza dedurre interruzioni
+nella distribuzione locale o estenderle ai comuni della condotta non citati.
+
+Risultati, hash e anomalie sono in docs/phase3-verifica.md e nel report tecnico.
+Le pagine privacy consultate non forniscono una qualifica di riuso dei contenuti:
+vedere licenze-sicurezza.md. Gli originali e le righe reali restano fuori da Git.
+
+**Sospensione del workflow reale:** il precedente flusso di passaggio del database
+tra artefatti Actions non può essere l'unico archivio. In Phase 3 è bloccato con
+if: false. Non basta impostare le variabili precedenti: per riattivarlo serve una
+PR con storage durevole integrato e testato, condizioni delle fonti e backup/restore.
+La raccolta locale esplicita rimane subordinata al registro del singolo canale.

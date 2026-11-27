@@ -1,0 +1,155 @@
+{
+  "checked_at": "2026-11-27T14:55:12.999953+00:00",
+  "publication_approved": false,
+  "pdf_samples": [
+    {
+      "source_url": "https://www.aicaonline.it/interventi_programmati/interventi_licata_extra_urbana.pdf",
+      "hash": "f558f69c0d49072a656b8a585b4b0ca8f5fb9e1116105c0ef6bff6a80b1654c2",
+      "expected_rows": 3,
+      "rows": 3,
+      "complete": true,
+      "review": 0,
+      "errors": [],
+      "address_quality": {
+        "house_number_unavailable": 3
+      }
+    },
+    {
+      "source_url": "https://www.aicaonline.it/interventi_programmati/interventi_sciacca.pdf",
+      "hash": "bfea16135a4c8cebe84d3c80340ee475b3be11b78a88caee0c510e1ca9490a2a",
+      "expected_rows": 214,
+      "rows": 214,
+      "complete": true,
+      "review": 0,
+      "errors": [],
+      "address_quality": {
+        "house_number_unavailable": 36,
+        "as_reported": 178
+      }
+    }
+  ],
+  "articles": [
+    {
+      "source_id": "aica",
+      "source_url": "https://www.aicaonline.it/comunicazioni/aica-lavori-per-la-nuova-rete-idrica-ad-agrigento-disservizi-in-alcune-zone-domani-si-torna-alla-normalita/",
+      "hash": "52cbe4ad469c759da1d563907b38395f9014e854f42a036da14352c080f6c942",
+      "categories": [
+        "interruzione"
+      ],
+      "restoration_confirmed": false,
+      "validation_status": "validated",
+      "issues": [],
+      "explicit_municipality_codes": [
+        "084001"
+      ],
+      "network_level": "local_distribution"
+    },
+    {
+      "source_id": "siciliacque",
+      "source_url": "https://www.siciliacque.it/avvisi/intervento-urgente-acquedotto-gela-aragona/",
+      "hash": "6437e533f1581d21c6edff1576821e744f2a64760afe5c6789cfc72c1b3cff03",
+      "categories": [
+        "guasto",
+        "interruzione"
+      ],
+      "restoration_confirmed": false,
+      "validation_status": "validated",
+      "issues": [],
+      "explicit_municipality_codes": [
+        "084021"
+      ],
+      "network_level": "adduction"
+    }
+  ],
+  "calendar": {
+    "source_url": "https://www.aicaonline.it/turni-idrici-2/",
+    "hash": "29fcec44f8c911b46cb8f9d87fa9818b183654cb7f00b03de633aed8e7cbc88a",
+    "cells": 3807,
+    "complete": false,
+    "errors": {
+      "duplicate_calendar_slot": 11
+    },
+    "issues": {
+      "calendar_date_incomplete": 3807,
+      "calendar_incomplete": 3807,
+      "unknown_calendar_value": 68,
+      "incomplete_calendar_location": 32,
+      "unknown_municipality": 64
+    },
+    "municipality_istat_codes": [
+      "084001",
+      "084003",
+      "084006",
+      "084007",
+      "084010",
+      "084011",
+      "084012",
+      "084013",
+      "084014",
+      "084016",
+      "084017",
+      "084018",
+      "084019",
+      "084020",
+      "084021",
+      "084022",
+      "084024",
+      "084025",
+      "084026",
+      "084028",
+      "084029",
+      "084030",
+      "084031",
+      "084032",
+      "084033",
+      "084034",
+      "084035",
+      "084036",
+      "084037",
+      "084039",
+      "084041",
+      "084042",
+      "084043"
+    ],
+    "full_dates": 0
+  },
+  "coverage_evidence": {
+    "document_link_present": 29,
+    "calendar_block_present": 33,
+    "contractual_operator_coverage": "not_certified"
+  },
+  "pdf_alternative_probe": {
+    "library": "pypdf",
+    "version": "7.2.0",
+    "license": "BSD-3-Clause",
+    "pages_read": 31,
+    "source_identifier_preserved": true,
+    "geometric_parser_parity_verified": false
+  },
+  "index_checks": [
+    {
+      "channel": "aica_communications",
+      "source_url": "https://www.aicaonline.it/comunicazioni/",
+      "status": 200,
+      "recognized_links": 10,
+      "document_hash": "0d9385729a5e4bf28dbe50b722f15abd28b9ea657f5ec519ed6a07a859577680"
+    },
+    {
+      "channel": "siciliacque_notices",
+      "source_url": "https://www.siciliacque.it/avvisi/",
+      "status": 200,
+      "recognized_links": 12,
+      "document_hash": "3341b480b59766a9e37627ce003421f31a5f031d202261614af592ce5288faba"
+    },
+    {
+      "robots_url": "https://www.aicaonline.it/robots.txt",
+      "status": 200,
+      "hash": "70f3c9b6ce35c9789eedbaf1eea9fdeb1e94c888d8e23983a12ca0e9319c34d1"
+    },
+    {
+      "robots_url": "https://www.siciliacque.it/robots.txt",
+      "status": 200,
+      "hash": "35a2d100fd7099a369d0f58e635eb35eef16bf742234e58299f6b0d407b1e7b9"
+    }
+  ]
+}

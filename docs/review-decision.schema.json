@@ -1,0 +1,87 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "decision_id": {
+      "minLength": 1,
+      "title": "Decision Id",
+      "type": "string"
+    },
+    "review_id": {
+      "title": "Review Id",
+      "type": "string"
+    },
+    "expected_payload_hash": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Expected Payload Hash",
+      "type": "string"
+    },
+    "actor": {
+      "minLength": 1,
+      "title": "Actor",
+      "type": "string"
+    },
+    "decided_at": {
+      "format": "date-time",
+      "title": "Decided At",
+      "type": "string"
+    },
+    "action": {
+      "enum": [
+        "approve",
+        "reject"
+      ],
+      "title": "Action",
+      "type": "string"
+    },
+    "reason": {
+      "minLength": 10,
+      "title": "Reason",
+      "type": "string"
+    },
+    "evidence_url": {
+      "format": "uri",
+      "maxLength": 2083,
+      "minLength": 1,
+      "title": "Evidence Url",
+      "type": "string"
+    },
+    "rule_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rule Id"
+    },
+    "corrections": {
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ]
+      },
+      "title": "Corrections",
+      "type": "object"
+    }
+  },
+  "required": [
+    "decision_id",
+    "review_id",
+    "expected_payload_hash",
+    "actor",
+    "decided_at",
+    "action",
+    "reason",
+    "evidence_url"
+  ],
+  "title": "ReviewDecision",
+  "type": "object"
+}

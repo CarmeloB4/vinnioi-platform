@@ -77,6 +77,18 @@
       "default": null,
       "title": "Province"
     },
+    "area": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Area"
+    },
     "address": {
       "anyOf": [
         {
@@ -88,6 +100,35 @@
       ],
       "default": null,
       "title": "Address"
+    },
+    "address_original": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Address Original"
+    },
+    "house_number": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "House Number"
+    },
+    "address_quality": {
+      "default": "not_assessed",
+      "title": "Address Quality",
+      "type": "string"
     },
     "intervention_type": {
       "anyOf": [
@@ -223,7 +264,7 @@
       "type": "boolean"
     },
     "parser_version": {
-      "default": "0.2.0",
+      "default": "0.3.0",
       "title": "Parser Version",
       "type": "string"
     },

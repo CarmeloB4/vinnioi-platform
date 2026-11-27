@@ -9,6 +9,20 @@ from uuid import uuid4
 from vinnioi.store import Store
 
 QUERIES = {
+    **{
+        table: f"SELECT * FROM {table}"
+        for table in (
+            "water_events",
+            "event_observations",
+            "event_municipalities",
+            "water_turnations",
+            "turnation_observations",
+            "event_source_links",
+            "review_decisions",
+            "event_correlations",
+            "operator_coverage_evidence",
+        )
+    },
     "interventions": "SELECT * FROM interventions ORDER BY intervention_id",
     "intervention_history": """SELECT o.observation_id, o.intervention_id, o.document_id,
         o.run_id, o.observed_at, o.present, o.change_types, d.source_url, d.document_hash,
@@ -62,7 +76,7 @@ def export_datasets(store: Store, root: Path) -> Path:
         (temporary / "manifest.json").write_text(
             json.dumps(
                 {
-                    "schema_version": 2,
+                    "schema_version": 3,
                     "datasets": counts,
                     "publication_approved": False,
                     "csv_null": "\\N",

@@ -92,3 +92,76 @@ correttezza. Su zero righe è null. Le date non disponibili possono quindi avere
 completezza 0% senza essere errori. La copertura è rispetto ai 43 comuni amministrativi,
 non rispetto ai comuni effettivamente serviti. Stato/data di un ripristino non sono
 dedotti dalla copertura o dal conteggio delle righe.
+
+# Contratto Phase 3 — versione 3
+
+Migrazione additiva da schema 2, senza riclassificazione dello storico esistente.
+Gli interventi aggiungono area, address_original, house_number e address_quality.
+Il suffisso civico 99999 segue AICA-99999-v1; la qualità dell'indirizzo non determina
+da sola la validità dell'intervento. I campi nuovi dei record legacy possono essere
+null finché non arriva una nuova osservazione o revisione esplicita.
+
+| Entità | Contenuto e separazione |
+| --- | --- |
+| water_events | Evento fonte identificato da ente + URL articolo; proiezione corrente, categorie, stato dichiarato, affidabilità e payload |
+| event_observations | Versione documentale, run, tempo di osservazione, variazione e payload storico |
+| event_municipalities | Codice ISTAT, evidenza e relazione explicit_service_area oppure mentioned_only |
+| event_source_links | Fonte originale dell'evento; non una fusione fra enti |
+| water_turnations | Ultima osservazione dello slot di calendario con data, qualità e payload |
+| turnation_observations | Versioni e cambiamenti dello slot; not_in_calendar non significa mancata erogazione |
+| review_decisions | Decisioni immutabili nell'API con autore, hash atteso, motivo, fonte, regola e prima/dopo |
+| event_correlations | Coppie candidate con hash delle due versioni, score di priorità e motivazioni |
+| operator_coverage_evidence | Claim documentale e provenienza; non aggiorna automaticamente la copertura contrattuale |
+
+Gli schemi JSON sono water-event.schema.json, water-turnation.schema.json,
+review-decision.schema.json e frontend-water-data.schema.json. Tutti i nuovi oggetti
+conservano l'origine real/synthetic. Gli originali non sono inclusi negli export.
+
+## Eventi
+
+Sette categorie: guasto, interruzione, manutenzione_programmata, riduzione_portata,
+emergenza_idrica, potabilita e ripristino_confermato. Categorie multiple possono
+coesistere nello stesso articolo. declared_status conserva un estratto della
+dichiarazione locale e non è un nuovo giudizio sul servizio. published_on è una date; published_at esiste solo con
+un timestamp completo e timezone. acquired_at ed extracted_at sono distinti.
+
+Ogni riferimento temporale conserva testo, data se ricavabile, ora se esplicita e
+kind planned/actual/unresolved. Oggi/domani usano la data editoriale disponibile;
+non la data del download. I riferimenti di ripristino previsti non confermano nulla.
+restoration_confirmed indica una formula esplicita della fonte, non un controllo
+indipendente e non un ripristino attribuito a tutti i comuni citati. Articoli con
+più comuni e ripristino richiedono revisione dello scope.
+
+network_level è adduction, local_distribution oppure unspecified secondo evidenza
+lessicale: non dal solo nome dell'ente. reliability è rule_based, needs_review o
+human_reviewed; il parser usa le prime due. Nessuna probabilità di accuratezza è
+stimata. validation_status riguarda la struttura e le regole, non l'attualità del fatto.
+
+## Calendari
+
+Conservati comune, etichetta originale, sottozona, serbatoio se disponibile, zona,
+viabilità, label data originale, data completa se esplicita, fascia oraria, valore
+originale, validità dichiarata, note, hash versione e posizione nella fonte.
+actual_delivery_confirmed è sempre false per questo contratto.
+
+Con data completa l'identità dello slot non cambia al cambiare dell'orario. Senza
+data completa include l'hash del calendario: nessuna falsa continuità fra mesi.
+Duplicati conservati con posizione distinta restano in revisione. Le celle vuote
+hanno valore e orario null, non uno stato di sospensione inventato.
+
+## Dataset e anteprima
+
+Gli export locali includono tutte le nuove tabelle in CSV/JSON/Parquet, oltre ai
+precedenti dataset. Il frontend ha un contratto separato: eventi recenti, eventi per
+comune con area esplicita, interventi tecnici senza indirizzi, turnazioni senza vie,
+timeline, indicatori dei 43 comuni e stato dell'ultimo tentativo/successo. Gli
+indicatori non attestano servizio regolare se i dati mancano. Il flag
+publication_approved è false anche per i dati strutturalmente validati.
+
+L'ultimo tentativo e l'ultimo successo non dimostrano freschezza della fonte: se
+ci sono errori o revisioni il contratto segnala needs_review. Una revisione umana è
+un run distinto e non cambia il tempo di osservazione della fonte originale.
+
+L'anteprima distingue anche last_source_observed_at dall'ultimo run completato:
+una revisione umana non rende più recente la fonte. Un ultimo run fallito resta
+failed, separato da needs_review per qualità o classificazione.

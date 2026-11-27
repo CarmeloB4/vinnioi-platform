@@ -75,3 +75,30 @@ GitHub va autorizzato anche in relazione alla visibilità della repository.
 Un errore HTTP, robots o indice non interpretabile dopo l'approvazione della fonte
 produce un run failed e un report input_failure, senza riconciliare assenze. Gli
 errori di parsing PDF sono conservati nei report documentali; la CLI ritorna 2.
+
+## Estensione Phase 3
+
+Schema 3 additivo e transazionale. I parser Phase 1/2 restano disponibili; nessuna
+riscrittura del frontend. `events.py` estrae comunicati AICA/avvisi Siciliacque da
+strutture HTML qualificate e classifica formule operative con regole deterministiche.
+`turnations.py` gestisce comuni, sottozone, celle, date esplicite e versioni di calendario.
+`source_http.py` riusa i controlli HTTP della pipeline con approvazioni per canale.
+
+`integration_store.py` separa water_events, event_observations, event_municipalities,
+water_turnations, turnation_observations ed event_source_links. Le proiezioni degli
+eventi narrativi e dei calendari conservano anche needs_review, esplicitamente marcati;
+non rappresentano eventi validati sul campo. Le loro osservazioni restano immutabili.
+Source_documents e ingestion_runs sono condivisi, senza mescolare real e synthetic.
+Gli articoli non operativi sono ignorati con conteggio; errori di parsing e acquisizione
+sono riportati nei run. Il modello non registra un evento per ogni articolo editoriale.
+
+`review.py` gestisce decisioni esplicite sulla quarantena tecnica e ne registra il run;
+`correlations.py` conserva motivazioni e versioni per associazioni candidate. Nessuna
+propagazione di stato tra fonti. `coverage.py` registra evidenze documentali e mantiene
+separata la copertura amministrativa dalla gestione contrattuale, non ancora certificata.
+
+`backup.py` implementa il protocollo di storage locale e il restore verificato.
+`frontend_data.py` produce un contratto tipizzato di anteprima, senza indirizzi tecnici
+o corpo degli articoli. Il flag di pubblicazione rimane false. Gli export completi
+sono locali e non devono essere esposti dal frontend. Strategie e limiti sono in
+storage.md, revisione.md, licenze-sicurezza.md e nell'ADR 0003.

@@ -1,0 +1,271 @@
+{
+  "$defs": {
+    "MunicipalityMention": {
+      "properties": {
+        "istat_code": {
+          "pattern": "^084\\d{3}$",
+          "title": "Istat Code",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "relationship": {
+          "enum": [
+            "explicit_service_area",
+            "mentioned_only"
+          ],
+          "title": "Relationship",
+          "type": "string"
+        },
+        "evidence": {
+          "title": "Evidence",
+          "type": "string"
+        }
+      },
+      "required": [
+        "istat_code",
+        "name",
+        "relationship",
+        "evidence"
+      ],
+      "title": "MunicipalityMention",
+      "type": "object"
+    },
+    "TemporalReference": {
+      "properties": {
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "planned",
+            "actual",
+            "unresolved"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Date"
+        },
+        "time": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Time"
+        }
+      },
+      "required": [
+        "text",
+        "kind"
+      ],
+      "title": "TemporalReference",
+      "type": "object"
+    },
+    "ValidationStatus": {
+      "enum": [
+        "validated",
+        "needs_review"
+      ],
+      "title": "ValidationStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "event_id": {
+      "title": "Event Id",
+      "type": "string"
+    },
+    "source_id": {
+      "enum": [
+        "aica",
+        "siciliacque"
+      ],
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_url": {
+      "format": "uri",
+      "maxLength": 2083,
+      "minLength": 1,
+      "title": "Source Url",
+      "type": "string"
+    },
+    "document_hash": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Document Hash",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "categories": {
+      "items": {
+        "enum": [
+          "guasto",
+          "interruzione",
+          "manutenzione_programmata",
+          "riduzione_portata",
+          "emergenza_idrica",
+          "potabilita",
+          "ripristino_confermato"
+        ],
+        "type": "string"
+      },
+      "title": "Categories",
+      "type": "array"
+    },
+    "declared_status": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Declared Status"
+    },
+    "restoration_confirmed": {
+      "default": false,
+      "title": "Restoration Confirmed",
+      "type": "boolean"
+    },
+    "network_level": {
+      "enum": [
+        "adduction",
+        "local_distribution",
+        "unspecified"
+      ],
+      "title": "Network Level",
+      "type": "string"
+    },
+    "municipalities": {
+      "items": {
+        "$ref": "#/$defs/MunicipalityMention"
+      },
+      "title": "Municipalities",
+      "type": "array"
+    },
+    "pipelines": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Pipelines",
+      "type": "array"
+    },
+    "published_on": {
+      "anyOf": [
+        {
+          "format": "date",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Published On"
+    },
+    "published_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Published At"
+    },
+    "acquired_at": {
+      "format": "date-time",
+      "title": "Acquired At",
+      "type": "string"
+    },
+    "extracted_at": {
+      "format": "date-time",
+      "title": "Extracted At",
+      "type": "string"
+    },
+    "temporal_references": {
+      "items": {
+        "$ref": "#/$defs/TemporalReference"
+      },
+      "title": "Temporal References",
+      "type": "array"
+    },
+    "reliability": {
+      "default": "needs_review",
+      "enum": [
+        "rule_based",
+        "needs_review",
+        "human_reviewed"
+      ],
+      "title": "Reliability",
+      "type": "string"
+    },
+    "validation_status": {
+      "$ref": "#/$defs/ValidationStatus",
+      "default": "needs_review"
+    },
+    "issues": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Issues",
+      "type": "array"
+    },
+    "data_origin": {
+      "default": "real",
+      "enum": [
+        "real",
+        "synthetic"
+      ],
+      "title": "Data Origin",
+      "type": "string"
+    },
+    "parser_version": {
+      "default": "0.3.0",
+      "title": "Parser Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "event_id",
+    "source_id",
+    "source_url",
+    "document_hash",
+    "title",
+    "categories",
+    "network_level",
+    "acquired_at",
+    "extracted_at"
+  ],
+  "title": "WaterEvent",
+  "type": "object"
+}
