@@ -229,3 +229,12 @@ apps/web/dist/
 apps/web/.astro/
 data/
 .env
+
+apps/web/dist-demo/
+apps/web/test-results/
+apps/web/playwright-report/
+
+# Sorgenti frontend e soli dati di riferimento con licenza verificata
+!apps/web/src/lib/
+!apps/web/src/data/
+!apps/web/public/data/

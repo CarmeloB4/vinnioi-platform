@@ -1,35 +1,162 @@
 ---
-import '../styles/global.css';
-const categories = [
-  ['Guasti', 'Segnalazioni esplicite di avarie da fonti ufficiali.'],
-  ['Interventi programmati', 'Attività pianificate: non equivalgono a un guasto in corso.'],
-  ['Ripristini confermati', 'Solo dichiarazioni esplicite della fonte, mai orari previsti.'],
-];
+import Base from '../layouts/Base.astro';
+import Stats from '../components/Stats.astro';
+import EventCard from '../components/EventCard.astro';
+import MapPreview from '../components/MapPreview.astro';
+import Empty from '../components/Empty.astro';
+import { portal } from '../lib/adapter';
+import { municipalities, formatDate } from '../lib/model';
 ---
-<!doctype html>
-<html lang="it">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Osservatorio civico indipendente sulle risorse idriche della provincia di Agrigento." />
-    <title>Vinnioi · Osservatorio civico dell’acqua</title>
-  </head>
-  <body class="bg-slate-50 text-slate-900">
-    <a href="#contenuto" class="sr-only focus:not-sr-only">Vai al contenuto</a>
-    <header class="border-b border-slate-200 px-6 py-6"><div class="mx-auto max-w-5xl text-2xl font-bold text-water">Vinnioi <span class="text-sm font-normal">Provincia di Agrigento</span></div></header>
-    <main id="contenuto" class="mx-auto max-w-5xl px-6 py-16">
-      <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-water">Indipendente · Open source · Apartitico</p>
-      <h1 class="max-w-3xl text-4xl font-bold leading-tight sm:text-6xl">Capire l’acqua, attraverso fonti verificabili.</h1>
-      <p class="mt-6 max-w-2xl text-lg text-slate-600">Un osservatorio civico su guasti, interruzioni, turnazioni e risorse idriche. Ispirato a OpenDataSicilia, con attenzione alla provenienza e ai limiti dei dati.</p>
-      <section class="mt-10 rounded-xl border border-amber-300 bg-amber-50 p-6" aria-labelledby="stato">
-        <h2 id="stato" class="text-xl font-semibold">Dati in fase di verifica</h2>
-        <p class="mt-2">Non sono ancora disponibili eventi validati. L’assenza di dati non indica l’assenza di disservizi. Aggiornamenti automatici disattivati.</p>
-      </section>
-      <section class="mt-12 grid gap-6 md:grid-cols-3" aria-label="Come leggiamo le informazioni">
-        {categories.map(([title, description]) => <article class="rounded-xl border border-slate-200 bg-white p-6"><h2 class="text-xl font-semibold text-water">{title}</h2><p class="mt-3 text-slate-600">{description}</p></article>)}
-      </section>
-      <section class="mt-12"><h2 class="text-2xl font-semibold">Fonti da consultare</h2><ul class="mt-4 flex flex-wrap gap-6 underline"><li><a href="https://www.aicaonline.it/interventi-programmati/">AICA</a></li><li><a href="https://www.siciliacque.it/">Siciliacque</a></li><li><a href="https://www.atiag9.it/">ATI AG9</a></li><li><a href="https://www.regione.sicilia.it/">Regione Siciliana</a></li></ul></section>
-    </main>
-    <footer class="mx-auto max-w-5xl px-6 py-8 text-sm text-slate-600">Vinnioi non è un canale ufficiale del gestore. <a class="underline" href="https://github.com/CarmeloB4/vinnioi-platform">Codice e metodologia</a></footer>
-  </body>
-</html>
+
+<Base>
+  <div class="wrap">
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <p class="eyebrow">L’osservatorio civico dell’acqua</p>
+        <h1 id="hero-title">
+          L’acqua,
+          <br />
+          attraverso i dati.
+        </h1>
+        <p class="lead">
+          Informazioni verificabili su reti idriche, interventi e disservizi. Per capire cosa
+          raccontano le fonti nella provincia di Agrigento.
+        </p>
+        <div class="actions">
+          <a class="btn" href="/dashboard/">
+            Esplora i dati
+          </a>
+          <a class="btn secondary" href="/chi-siamo/">
+            Conosci il progetto
+          </a>
+        </div>
+        <p class="small muted" style="margin-top:25px">
+          Indipendente. Open source. Apartitico.
+        </p>
+      </div>
+      <div class="hero-map">
+        <div class="flex justify-between items-center">
+          <p class="eyebrow" style="margin:0">
+            Il territorio
+          </p>
+          <span class="badge">43 comuni</span>
+        </div>
+        <MapPreview />
+        <div class="map-caption">
+          <span>Confini statistici · ISTAT 2026</span>
+          <a href="/mappa/">Apri la mappa</a>
+        </div>
+      </div>
+    </section>
+    <Stats />
+    <section class="search-panel" aria-labelledby="comune-title">
+      <div>
+        <h2 id="comune-title">Le informazioni del tuo comune.</h2>
+        <p>Interventi, aggiornamenti e fonti, raccolti in una sola pagina.</p>
+      </div>
+      <form action="/comuni/" class="search-box">
+        <div style="flex:1">
+          <label for="municipality-search">Cerca un comune</label>
+          <input
+            id="municipality-search"
+            name="q"
+            list="municipalities"
+            placeholder="Ad esempio, Agrigento"
+            autocomplete="off"
+          />
+          <datalist id="municipalities">
+            {municipalities.map((m) => (
+              <option value={m.name} />
+            ))}
+          </datalist>
+        </div>
+        <button class="btn secondary" style="align-self:end">
+          Cerca
+        </button>
+      </form>
+    </section>
+    <section class="section">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">Dalle fonti al territorio</p>
+          <h2>Ultimi aggiornamenti</h2>
+        </div>
+        <a class="text-link small" href="/dashboard/">
+          Tutti gli aggiornamenti
+        </a>
+      </div>
+      {portal.state === 'empty' ? (
+        <Empty
+          title="Stiamo preparando i primi dati pubblicabili"
+          text="Il portale è pronto. La pubblicazione dei dati dipende dalla validazione e dalle condizioni di riutilizzo delle fonti. Per ora non mostriamo indicatori inventati."
+        />
+      ) : (
+        <div class="grid-3">
+          {portal.data.recent_events.slice(0, 3).map((event) => (
+            <EventCard event={event} />
+          ))}
+        </div>
+      )}
+      <p class="small muted" style="margin-top:18px">
+        Ultima osservazione delle fonti:{' '}
+        {formatDate(portal.data.last_update.last_source_observed_at)}. Una nuova osservazione non
+        certifica lo stato attuale del servizio.
+      </p>
+    </section>
+    <section class="section" style="border-top:1px solid var(--line)">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">Una lettura consapevole</p>
+          <h2>Ogni informazione ha il suo contesto.</h2>
+        </div>
+      </div>
+      <div class="grid-3">
+        {[
+          [
+            'Interventi tecnici',
+            'Lavori sulla rete, con lo stato dichiarato dal gestore. “Completato” descrive il lavoro, non la disponibilità d’acqua.',
+          ],
+          [
+            'Disservizi e ripristini',
+            'Eventi descritti dalle fonti. Un orario previsto resta una previsione, finché non arriva una conferma esplicita.',
+          ],
+          [
+            'Turnazioni programmate',
+            'Calendari con date complete e dati validati. Un turno programmato non dimostra che l’acqua sia stata erogata.',
+          ],
+        ].map(([title, text]) => (
+          <article class="panel">
+            <h3>{title}</h3>
+            <p class="muted small" style="margin-top:16px">
+              {text}
+            </p>
+          </article>
+        ))}
+      </div>
+    </section>
+    <section class="grid-2">
+      <article class="panel">
+        <p class="eyebrow">Open data</p>
+        <h2>Dati leggibili, riuso consapevole.</h2>
+        <p class="muted" style="margin-top:18px">
+          Provenienza, formati e condizioni di utilizzo. Rendiamo scaricabili soltanto ciò che è
+          autorizzato.
+        </p>
+        <a href="/opendata/" class="text-link" style="display:inline-block;margin-top:22px">
+          Esplora i dataset
+        </a>
+      </article>
+      <article class="panel">
+        <p class="eyebrow">Trasparenza</p>
+        <h2>Le fonti, prima delle conclusioni.</h2>
+        <p class="muted" style="margin-top:18px">
+          Scopriamo insieme cosa possiamo leggere nei documenti e quali informazioni restano
+          sconosciute.
+        </p>
+        <a href="/metodologia/" class="text-link" style="display:inline-block;margin-top:22px">
+          Leggi la metodologia
+        </a>
+      </article>
+    </section>
+  </div>
+</Base>

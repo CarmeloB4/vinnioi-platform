@@ -1,0 +1,14 @@
+---
+const {
+  title = 'Informazioni non disponibili',
+  text = 'Non ci sono osservazioni pubblicabili per questa selezione. L’assenza di dati non indica l’assenza di disservizi.',
+} = Astro.props;
+---
+
+<div class="empty">
+  <h3>{title}</h3>
+  <p>{text}</p>
+  <a class="text-link small" href="/fonti/" style="display:inline-block;margin-top:16px">
+    Come leggiamo le fonti
+  </a>
+</div>

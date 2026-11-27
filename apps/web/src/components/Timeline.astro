@@ -1,0 +1,35 @@
+---
+import { formatDate } from '../lib/model';
+interface Props {
+  rows: { observed_at: string; changes: string[] }[];
+}
+const { rows } = Astro.props;
+const labels: Record<string, string> = {
+  new: 'Prima osservazione',
+  known: 'Presenza nuovamente osservata',
+  changed: 'Aggiornamento della fonte',
+  status_changed: 'Variazione dello stato dichiarato',
+  information_changed: 'Informazioni modificate',
+  missing: 'Non più presente nel documento',
+  reappeared: 'Nuovamente presente nella fonte',
+  restoration_confirmed: 'Ripristino esplicitamente dichiarato',
+  not_in_calendar: 'Non presente nel calendario successivo',
+};
+---
+
+{rows.length ? (
+  <ol class="timeline">
+    {[...rows]
+      .sort((a, b) => Date.parse(a.observed_at) - Date.parse(b.observed_at))
+      .map((r) => (
+        <li>
+          <time datetime={r.observed_at}>{formatDate(r.observed_at, true)}</time>
+          <p>{r.changes.map((c) => labels[c] || 'Aggiornamento osservato').join(' · ')}</p>
+        </li>
+      ))}
+  </ol>
+) : (
+  <p class="muted">
+    Nessuna osservazione disponibile. Non è possibile ricostruire una timeline affidabile.
+  </p>
+)}

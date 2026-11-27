@@ -6,23 +6,19 @@ Non è un canale ufficiale dei gestori.
 
 ## Stato
 
-Phase 3: connettori HTML AICA e Siciliacque, eventi fonte separati dalle osservazioni,
-calendari di distribuzione, correlazioni candidate e revisione tracciata degli
-interventi. DuckDB schema 3 migra in modo additivo lo storico Phase 2.
+Phase 4: portale Astro con dashboard, filtri, mappa comunale e 43 pagine territoriali.
+Demo e produzione hanno build separate: **la produzione senza dati autorizzati è vuota**;
+la demo segnala sempre che gli eventi sono sintetici. L'assenza di avvisi non certifica
+la disponibilità dell'acqua. Lavori completati e previsioni non confermano un ripristino.
 
-La validità dell'intervento è distinta dalla qualità dell'indirizzo: il civico
-segnaposto 99999 resta nullo e la stringa originale è conservata. Nessun ripristino
-è dedotto da completamento lavori, scomparsa di righe o previsioni.
+**Acquisizione sistematica e workflow reale restano disabilitati.** La pipeline Python
+Phase 3, lo storico DuckDB e i blocchi delle fonti rimangono invariati. Nessun deploy,
+DNS o storage esterno è stato attivato; licenze delle fonti operative e storage durevole
+restano verifiche aperte.
 
-**Acquisizione sistematica, workflow reale e pubblicazione sono disabilitati.**
-Backup/restore locali sono verificati; nessuno storage esterno è attivato. Il workflow
-reale non può usare artefatti temporanei come unico archivio. Il frontend non è una
-dashboard: include soltanto un contratto JSON e una fixture sintetica aggiuntivi.
-
-Vedere [risultati e limiti Phase 3](docs/phase3-verifica.md),
-[revisione](docs/revisione.md), [storage](docs/storage.md) e
-[licenze e sicurezza](docs/licenze-sicurezza.md). I risultati delle
-[Phase 2](docs/phase2-verifica.md) restano documentati come verifica storica.
+Vedere [portale, verifica e limiti Phase 4](docs/phase4-web.md),
+[risultati Phase 3](docs/phase3-verifica.md), [revisione](docs/revisione.md),
+[storage](docs/storage.md) e [licenze e sicurezza](docs/licenze-sicurezza.md).
 
 ## Avvio
 
@@ -36,7 +32,9 @@ uv run ruff format --check .
 npm ci
 npm run check
 npm run build
-npm run dev
+npm run test:web
+npm run dev             # produzione vuota
+npm run dev:demo        # solo demo sintetica esplicita
 ```
 
 ## Storico e riproduzione offline
@@ -103,8 +101,8 @@ La revisione della quarantena richiede una decisione esplicita secondo lo schema
 `docs/review-decision.schema.json`: non avviene automaticamente all'avvio.
 
 La fixture `apps/web/fixtures/water-data.synthetic.json` e lo schema
-`docs/frontend-water-data.schema.json` sono contratti per una futura interfaccia,
-non un dataset reale pubblicato. Gli export completi possono contenere evidenze
+`docs/frontend-water-data.schema.json` sono contratti della pipeline; `portal.synthetic.json` aggiunge scenari di interfaccia
+programmati e lavori completati. Sono tutti esempi fittizi, non dataset reali pubblicati. Gli export completi possono contenere evidenze
 locali da minimizzare e non devono essere copiati nella directory pubblica dell'app.
 
 ## Acquisizione reale
@@ -143,7 +141,10 @@ PDF né il testo integrale estratto. Non sono automaticamente pubblicabili.
 
 Build dalla radice: `npm ci && npm run build`; directory di output:
 `apps/web/dist`; Node 22.23.4+. Nessun adapter SSR necessario: output statico.
-Nessun deploy o servizio a pagamento è stato attivato. Vedere la
+Impostare `VINNIOI_MODE=production` e `VINNIOI_DEPLOYMENT=production`. Senza input
+autorizzati la build non pubblica eventi. Istruzioni, gate e rollback in
+[docs/phase4-web.md](docs/phase4-web.md). Nessun deploy o servizio a pagamento
+è stato attivato. Vedere la
 [guida ufficiale](https://developers.cloudflare.com/pages/framework-guides/deploy-an-astro-site/).
 
 ## Licenze
@@ -151,7 +152,8 @@ Nessun deploy o servizio a pagamento è stato attivato. Vedere la
 Il codice del progetto mantiene la [licenza MIT esistente](LICENSE), invariata.
 La MIT non si estende ai contenuti delle fonti o alle dipendenze.
 L’anagrafica deriva da ISTAT, CC BY 4.0: attribuzione e hash in
-`packages/ingestion/src/vinnioi/resources/municipalities.provenance.json`. I documenti di terzi
+`packages/ingestion/src/vinnioi/resources/municipalities.provenance.json`. I confini statistici ISTAT 2026 sono distribuiti sotto CC BY 4.0, con attribuzione
+e hash in `apps/web/public/data/municipalities.provenance.json`. I documenti operativi di terzi
 non sono distribuiti. PyMuPDF ha condizioni AGPL/commerciali: prima di distribuire una
 soluzione che lo incorpora o di esporre servizi basati su di esso, verificare gli
 obblighi applicabili (vedere docs/architettura.md). Nessuna licenza commerciale è

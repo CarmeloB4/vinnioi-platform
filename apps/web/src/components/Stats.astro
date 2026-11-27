@@ -1,0 +1,38 @@
+---
+import { portal } from '../lib/adapter';
+const { data, state } = portal;
+const values = [
+  ['Territorio osservato', '43', 'comuni dell’anagrafica ISTAT'],
+  [
+    'Disservizi nelle fonti',
+    state === 'ready'
+      ? String(data.recent_events.filter((e) => !e.restoration_confirmed).length)
+      : '—',
+    state === 'ready'
+      ? 'eventi nel dataset, non utenze colpite'
+      : 'dati autorizzati non disponibili',
+  ],
+  [
+    'Interventi tecnici',
+    state === 'ready' ? String(data.technical_interventions.length) : '—',
+    'distinti dagli eventi di servizio',
+  ],
+  [
+    'Ripristini dichiarati',
+    state === 'ready'
+      ? String(data.recent_events.filter((e) => e.restoration_confirmed).length)
+      : '—',
+    'solo conferme esplicite della fonte',
+  ],
+];
+---
+
+<div class="stats">
+  {values.map(([label, value, note]) => (
+    <div class="stat">
+      <p class="label">{label}</p>
+      <strong>{value}</strong>
+      <span>{note}</span>
+    </div>
+  ))}
+</div>

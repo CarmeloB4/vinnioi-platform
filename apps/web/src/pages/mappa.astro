@@ -1,0 +1,222 @@
+---
+import Base from '../layouts/Base.astro';
+import { portal } from '../lib/adapter';
+import { municipalities } from '../lib/model';
+const counts = Object.fromEntries(
+  municipalities.map((m) => [
+    m.code,
+    portal.state === 'ready'
+      ? portal.data.recent_events.filter((e) => e.municipality_istat_codes.includes(m.code)).length
+      : null,
+  ]),
+);
+---
+
+<Base title="Mappa del territorio">
+  <div class="wrap">
+    <header class="page-head">
+      <p class="eyebrow">Una vista d’insieme</p>
+      <h1>L’acqua sul territorio.</h1>
+      <p class="lead">
+        Eventi aggregati per comune, senza attribuire posizioni agli interventi. I confini sono
+        statistici, non una mappa della rete idrica.
+      </p>
+    </header>
+    <div class="map-options">
+      <div>
+        <label for="map-municipality">Seleziona un comune</label>
+        <select id="map-municipality">
+          <option value="">Tutto il territorio</option>
+          {municipalities.map((m) => (
+            <option value={m.code}>{m.name}</option>
+          ))}
+        </select>
+      </div>
+      <button class="btn secondary" id="include-islands">
+        Includi le isole Pelagie
+      </button>
+      <button class="btn" id="activate-map">
+        Attiva mappa interattiva
+      </button>
+    </div>
+    <p class="small muted" id="map-status" role="status" style="margin-bottom:16px">
+      La mappa si carica solo quando la attivi. L’elenco sottostante è sempre accessibile.
+    </p>
+    <div id="map" class="map-view">
+      <div class="map-placeholder">
+        <h2 style="font-size:1.6rem">43 comuni, comprese le isole.</h2>
+        <p class="muted" style="margin-top:18px">
+          Confini ufficiali ISTAT, senza servizi esterni di mappe o posizioni puntuali inventate.
+        </p>
+        <a class="text-link" href="#map-alternative" style="display:inline-block;margin-top:22px">
+          Consulta i dati in elenco
+        </a>
+      </div>
+    </div>
+    <div class="legend" aria-label="Legenda">
+      <span>
+        <i></i>
+        {portal.state === 'empty' ? 'Informazioni non disponibili' : 'Nessun evento nel campione'}
+      </span>
+      {portal.state === 'ready' && (
+        <span>
+          <i class="active"></i>Eventi presenti nel dataset
+        </span>
+      )}
+    </div>
+    <p class="small muted">
+      Fonte: ISTAT, confini generalizzati 2026, CC BY 4.0; selezione AG e riproiezione Vinnioi.
+      Confini ai soli fini statistici. Un conteggio nullo non attesta l’assenza di problemi.
+    </p>
+    <section class="section" id="map-alternative">
+      <h2 style="margin-bottom:24px">Il territorio in elenco</h2>
+      <div class="municipal-grid">
+        {municipalities.map((m) => (
+          <a class="municipal-link" href={`/comuni/${m.slug}/`}>
+            <strong>{m.name}</strong>
+            <span>
+              {counts[m.code] === null
+                ? 'Informazioni non disponibili'
+                : `${counts[m.code]} eventi nel dataset${portal.mode === 'demo' ? ' sintetico' : ''}`}
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script
+    id="map-data"
+    type="application/json"
+    set:html={JSON.stringify({ counts, municipalities, mode: portal.mode }).replace(
+      /</g,
+      '\\u003c',
+    )}
+  />
+</Base>
+<script>
+  import type { Map as MapType } from 'maplibre-gl';
+  let map: MapType | undefined;
+  let geo: any;
+  const settings = JSON.parse(document.querySelector('#map-data')?.textContent || '{}');
+  const button = document.querySelector<HTMLButtonElement>('#activate-map')!;
+  const select = document.querySelector<HTMLSelectElement>('#map-municipality')!;
+  const status = document.querySelector('#map-status')!;
+  function bounds(features: any[]) {
+    const points: number[][] = [];
+    function visit(a: any) {
+      if (typeof a[0] === 'number') points.push(a);
+      else a.forEach(visit);
+    }
+    features.forEach((f) => visit(f.geometry.coordinates));
+    return [
+      [Math.min(...points.map((p) => p[0])), Math.min(...points.map((p) => p[1]))],
+      [Math.max(...points.map((p) => p[0])), Math.max(...points.map((p) => p[1]))],
+    ] as [[number, number], [number, number]];
+  }
+  select.addEventListener('change', () => {
+    const m = settings.municipalities.find((m: any) => m.code === select.value);
+    status.textContent = m
+      ? `${m.name}: ${settings.counts[m.code] === null ? 'informazioni non disponibili' : settings.counts[m.code] + ' eventi nel dataset'}. La pagina comunale è disponibile nell’elenco.`
+      : 'Tutto il territorio selezionato.';
+    if (map && geo) {
+      const features = select.value
+        ? geo.features.filter((f: any) => f.properties.code === select.value)
+        : geo.features.filter((f: any) => f.properties.code !== '084020');
+      map.fitBounds(bounds(features), { padding: 40, duration: 0 });
+      map.setFilter('selected', ['==', ['get', 'code'], select.value]);
+    }
+  });
+  document.querySelector('#include-islands')?.addEventListener('click', () => {
+    if (map && geo) map.fitBounds(bounds(geo.features), { padding: 40, duration: 0 });
+    else
+      status.textContent =
+        'Attiva la mappa per visualizzare anche le isole Pelagie, oppure scegli Lampedusa e Linosa nell’elenco.';
+  });
+  button.addEventListener('click', async () => {
+    button.disabled = true;
+    status.textContent = 'Caricamento della mappa…';
+    try {
+      const [maplibre, response] = await Promise.all([
+        import('maplibre-gl'),
+        fetch('/data/municipalities.geojson'),
+      ]);
+      await import('maplibre-gl/dist/maplibre-gl.css');
+      if (!response.ok) throw new Error('Geometrie non disponibili');
+      geo = await response.json();
+      for (const f of geo.features) f.properties.count = settings.counts[f.properties.code] ?? -1;
+      document.querySelector('#map')!.replaceChildren();
+      map = new maplibre.Map({
+        container: 'map',
+        style: {
+          version: 8,
+          sources: {},
+          layers: [
+            { id: 'background', type: 'background', paint: { 'background-color': '#eaf2f6' } },
+          ],
+        },
+        attributionControl: { compact: false },
+        bounds: bounds(geo.features.filter((f: any) => f.properties.code !== '084020')),
+        fitBoundsOptions: { padding: 35 },
+        cooperativeGestures: true,
+      });
+      map!.addControl(new maplibre.NavigationControl({ showCompass: false }));
+      map!.on('load', () => {
+        map!.addSource('municipalities', {
+          type: 'geojson',
+          data: geo,
+          attribution: 'ISTAT 2026 · CC BY 4.0 · elaborazione Vinnioi',
+        });
+        map!.addLayer({
+          id: 'areas',
+          type: 'fill',
+          source: 'municipalities',
+          paint: {
+            'fill-color': ['case', ['>', ['get', 'count'], 0], '#007b96', '#c9dfe9'],
+            'fill-opacity': 0.85,
+          },
+        });
+        map!.addLayer({
+          id: 'borders',
+          type: 'line',
+          source: 'municipalities',
+          paint: { 'line-color': '#547e97', 'line-width': 1 },
+        });
+        map!.addLayer({
+          id: 'selected',
+          type: 'line',
+          source: 'municipalities',
+          filter: ['==', ['get', 'code'], ''],
+          paint: { 'line-color': '#0b3452', 'line-width': 3 },
+        });
+        status.textContent =
+          'Mappa caricata. Seleziona un comune con il menu o con un clic sui confini.';
+        select.dispatchEvent(new Event('change'));
+      });
+      map!.on('click', 'areas', (event) => {
+        const f = event.features?.[0];
+        if (!f) return;
+        const m = settings.municipalities.find((m: any) => m.code === f.properties.code);
+        if (!m) return;
+        const content = document.createElement('div'),
+          heading = document.createElement('strong'),
+          text = document.createElement('p'),
+          link = document.createElement('a');
+        heading.textContent = m.name;
+        text.textContent =
+          f.properties.count < 0
+            ? 'Informazioni non disponibili'
+            : `${f.properties.count} eventi nel dataset${settings.mode === 'demo' ? ' sintetico' : ''}. Non è un indicatore di servizio regolare.`;
+        link.href = `/comuni/${m.slug}/`;
+        link.textContent = 'Vai alla pagina comunale';
+        content.append(heading, text, link);
+        new maplibre.Popup().setLngLat(event.lngLat).setDOMContent(content).addTo(map!);
+      });
+      button.hidden = true;
+    } catch {
+      status.textContent =
+        'La mappa interattiva non è disponibile in questo browser. Puoi consultare tutti i comuni nell’elenco accessibile.';
+      button.disabled = false;
+      button.textContent = 'Riprova a caricare la mappa';
+    }
+  });
+</script>

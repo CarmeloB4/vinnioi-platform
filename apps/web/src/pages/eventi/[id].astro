@@ -1,0 +1,87 @@
+---
+import Base from '../../layouts/Base.astro';
+import { portal } from '../../lib/adapter';
+import {
+  municipalities,
+  categoryNames,
+  eventStatus,
+  sourceNames,
+  formatDate,
+} from '../../lib/model';
+import Timeline from '../../components/Timeline.astro';
+export const getStaticPaths = () =>
+  portal.data.recent_events.map((event) => ({ params: { id: event.event_id }, props: { event } }));
+const { event: e } = Astro.props;
+---
+
+<Base title={e.title}>
+  <div class="wrap">
+    <header class="page-head">
+      <p class="breadcrumb">
+        <a href="/dashboard/">Dashboard</a> / Scheda evento
+      </p>
+      <div class="tags" style="margin-bottom:20px">
+        {e.categories.map((c) => (
+          <span class="badge">{categoryNames[c]}</span>
+        ))}
+      </div>
+      <h1 style="max-width:950px">{e.title}</h1>
+      <p class="lead">
+        Fonte: {sourceNames[e.source_id]} · Pubblicazione: {formatDate(e.published_on)}
+      </p>
+    </header>
+    <div class:list={['notice', !e.restoration_confirmed ? 'warning' : '']}>
+      <strong>{eventStatus(e)}</strong>
+      <p>
+        {e.restoration_confirmed
+          ? 'La fonte dichiara un ripristino. Non è una verifica indipendente sul campo.'
+          : e.restoration_expected_on
+            ? `Termine previsto: ${formatDate(e.restoration_expected_on)}. Non conferma che la fornitura sia stata ripristinata.`
+            : 'Il contratto disponibile non contiene una dichiarazione completa dello stato. Non deduciamo durata o risoluzione.'}
+      </p>
+    </div>
+    <section class="grid-2 section">
+      <div class="panel">
+        <h2 style="font-size:1.6rem">Territorio e provenienza</h2>
+        <ul>
+          {e.municipality_istat_codes.map((code) => {
+            const m = municipalities.find((m) => m.code === code)!;
+            return (
+              <li>
+                <a href={`/comuni/${m.slug}/`} class="text-link">
+                  {m.name}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+        <p class="small muted">
+          I comuni elencati sono citati esplicitamente nell’area di servizio descritta. Non
+          estendiamo l’impatto a comuni omonimi delle condotte.
+        </p>
+        <p style="margin-top:18px">
+          Livello rete:{' '}
+          {e.network_level === 'adduction'
+            ? 'adduzione'
+            : e.network_level === 'local_distribution'
+              ? 'distribuzione locale'
+              : 'non determinato'}
+          .
+        </p>
+        <p class="small muted" style="margin-top:14px">
+          Acquisizione: {formatDate(e.acquired_at, true)}
+          <br />
+          Estrazione:{' '}
+          {e.reliability === 'needs_review' ? 'da revisionare' : 'tramite regole deterministiche'}.
+        </p>
+        <a class="btn secondary" href={e.source_url} style="margin-top:22px">
+          Apri la fonte originale
+        </a>
+      </div>
+      <div class="panel">
+        <h2 style="font-size:1.6rem;margin-bottom:26px">Timeline delle osservazioni</h2>
+        <Timeline rows={portal.data.timeline.filter((t) => t.entity_id === e.event_id)} />
+      </div>
+    </section>
+  </div>
+</Base>

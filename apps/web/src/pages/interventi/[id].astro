@@ -1,0 +1,58 @@
+---
+import Base from '../../layouts/Base.astro';
+import { portal } from '../../lib/adapter';
+import { municipalities, formatDate } from '../../lib/model';
+import Timeline from '../../components/Timeline.astro';
+export const getStaticPaths = () =>
+  portal.data.technical_interventions.map((row) => ({
+    params: { id: row.intervention_id },
+    props: { row },
+  }));
+const { row } = Astro.props;
+const municipality = municipalities.find((m) => m.code === row.municipality_istat_code);
+---
+
+<Base
+  title={`${row.intervention_type || 'Intervento tecnico'} — ${row.municipality || 'Comune non determinato'}`}
+>
+  <div class="wrap">
+    <header class="page-head">
+      <p class="breadcrumb">
+        <a href="/dashboard/">Dashboard</a> / Intervento tecnico
+      </p>
+      <p class="eyebrow">Lavori sulla rete</p>
+      <h1>{row.intervention_type || 'Intervento tecnico'}</h1>
+      <p class="lead">
+        {municipality && (
+          <a class="text-link" href={`/comuni/${municipality.slug}/`}>
+            {municipality.name}
+          </a>
+        )}{' '}
+        · Rete {row.network_type || 'non specificata'}
+      </p>
+    </header>
+    <div class="notice warning">
+      <strong>Stato del lavoro: {row.reported_status || 'non disponibile'}.</strong>
+      <p>
+        “COMPLETATO” descrive il lavoro tecnico e non conferma il ripristino della fornitura idrica.
+      </p>
+    </div>
+    <section class="grid-2 section">
+      <div class="panel">
+        <h2 style="font-size:1.6rem">Informazioni disponibili</h2>
+        <p style="margin-top:20px">Osservato il {formatDate(row.last_seen_at, true)}.</p>
+        <p class="muted" style="margin-top:16px">
+          Gli indirizzi e i numeri civici tecnici non sono esposti nel portale. La qualità
+          dell’indirizzo è distinta dalla validità strutturale dell’intervento.
+        </p>
+        <a class="btn secondary" style="margin-top:24px" href={row.source_url}>
+          Consulta il documento originale
+        </a>
+      </div>
+      <div class="panel">
+        <h2 style="font-size:1.6rem;margin-bottom:26px">Timeline</h2>
+        <Timeline rows={portal.data.timeline.filter((t) => t.entity_id === row.intervention_id)} />
+      </div>
+    </section>
+  </div>
+</Base>
