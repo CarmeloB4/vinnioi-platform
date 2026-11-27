@@ -46,3 +46,32 @@ L'uso come dipendenza non assegna la MIT alla libreria. Prima della distribuzion
 integrata o dell'esposizione di funzionalità server verificare compatibilità e obblighi
 AGPL; valutare un parser alternativo se necessario. Nessuna licenza a pagamento
 acquistata. Questo repository non include binari o documenti di terzi.
+
+## Estensione Phase 2
+
+La CLI documentale originale rimane disponibile. `vinnioi-history` aggiunge il flusso:
+
+PDF locale o fonte approvata → parser geometrico → validazione e quarantena →
+transazione DuckDB → osservazioni e proiezione → report → snapshot locali.
+
+Il parser Phase 1 resta testuale. Quello Phase 2, in `table_parser.py`, riconosce
+specificamente le tabelle degli interventi; non interpreta comunicati o turnazioni.
+`quality.py` applica controlli deterministici, ripetuti prima della persistenza.
+`store.py` separa municipalities, sources, source_documents, interventions,
+intervention_observations e ingestion_runs, aggiungendo membership per URL,
+review_records e quality_reports. `datasets.py` esporta le viste e le tabelle.
+
+`pytz` è esplicita dipendenza runtime perché DuckDB la richiede per restituire
+TIMESTAMPTZ all'API Python; i timestamp applicativi restano UTC.
+L'anagrafica amministrativa ISTAT è distribuita come risorsa del package con fonte,
+hash e attribuzione CC BY 4.0; non descrive la copertura effettiva AICA.
+
+Le regole di tempo, assenza, concorrenza e continuità sono nell'ADR 0002. DuckDB
+ha un solo processo scrittore: non lanciare due acquisizioni sullo stesso file.
+La CI non contatta fonti reali. Il workflow reale è protetto da registro e variabili
+SOURCES_VERIFIED/HISTORY_STORAGE_VERIFIED ed è solo manuale. L'eventuale archivio
+GitHub va autorizzato anche in relazione alla visibilità della repository.
+
+Un errore HTTP, robots o indice non interpretabile dopo l'approvazione della fonte
+produce un run failed e un report input_failure, senza riconciliare assenze. Gli
+errori di parsing PDF sono conservati nei report documentali; la CLI ritorna 2.

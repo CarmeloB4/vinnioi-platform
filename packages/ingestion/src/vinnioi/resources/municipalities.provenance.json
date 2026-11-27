@@ -1,0 +1,11 @@
+{
+  "source": "ISTAT",
+  "url": "https://www.istat.it/storage/codici-unita-amministrative/Elenco-comuni-italiani.csv",
+  "retrieved_on": "2026-11-27",
+  "original_sha256": "57eaf945182fc64fa05f80f1a5fb2a84cff55ebde2af6e3947a731776e7809e0",
+  "license": "CC BY 4.0",
+  "license_url": "https://www.istat.it/note-legali/",
+  "attribution": "Fonte: ISTAT, elenco comuni italiani; elaborazione Vinnioi: selezione AG e riduzione colonne. Copertura gestore non desunta dai confini amministrativi.",
+  "reference_date": "non dichiarata nel CSV; fotografia acquisita il 2026-11-27",
+  "count": 43
+}

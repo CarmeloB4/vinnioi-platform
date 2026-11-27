@@ -1,0 +1,40 @@
+[
+  {
+    "municipality": "Aragona",
+    "url": "https://www.aicaonline.it/interventi_programmati/interventi_aragona.pdf",
+    "document_hash": "ed13fcea40882de8be18c9305c20161926272a86bdd63be898f8345132edc9f4",
+    "bytes": 12535,
+    "extracted_rows": 5,
+    "expected_rows": 5,
+    "complete": true,
+    "validated": 3,
+    "review": 2,
+    "errors": [],
+    "issues": {
+      "address_placeholder": 2
+    },
+    "statuses": {
+      "PIANIFICATO": 4,
+      "COMPLETATO": 1
+    }
+  },
+  {
+    "municipality": "Ribera",
+    "url": "https://www.aicaonline.it/interventi_programmati/interventi_ribera.pdf",
+    "document_hash": "0c4874a2948e66a19d24b1a67b09a11a27171fbd6409668dce6d221a37684155",
+    "bytes": 121518,
+    "extracted_rows": 72,
+    "expected_rows": 72,
+    "complete": true,
+    "validated": 38,
+    "review": 34,
+    "errors": [],
+    "issues": {
+      "address_placeholder": 34
+    },
+    "statuses": {
+      "PIANIFICATO": 39,
+      "COMPLETATO": 33
+    }
+  }
+]

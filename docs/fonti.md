@@ -51,3 +51,44 @@ Prima di modificare `acquisition_approved` in `config/sources.toml`:
 
 L'attivazione dell'acquisizione non autorizza la pubblicazione: gli export restano
 in staging e `redistribution_allowed` resta false. Il workflow non carica artefatti.
+
+## Analisi AICA — Phase 2 (27 novembre 2026)
+
+| Sezione | Layout e informazioni osservate | Frequenza e criticità |
+| --- | --- | --- |
+| [Interventi](https://www.aicaonline.it/interventi-programmati/) | Indice di PDF comunali; campioni Agrigento, Aragona e Ribera con sei colonne: posizione, codice intervento, indirizzo, tipo/rete, stato, impatto. | Timestamp di generazione nel PDF, non pubblicazione. Nessuna frequenza garantita accertata. URL sostituibili, righe tra pagine, indirizzi segnaposto. |
+| [Comunicazioni](https://www.aicaonline.it/comunicazioni/) | Archivio HTML paginato, date editoriali, titoli e testi narrativi; include comunicazioni non operative e riepiloghi. | Date editoriali irregolari osservate; nessun SLA accertato. Previsioni e riepiloghi non sono singoli interventi o conferme di ripristino. |
+| [Turni](https://www.aicaonline.it/servizi/turni-idrici-settimanali/) | La pagina di servizio rimanda a [turni-idrici-2](https://www.aicaonline.it/turni-idrici-2/), una pagina HTML con comuni, serbatoi, zone, vie e colonne giornaliere. | La denominazione settimanale non prova una frequenza di aggiornamento garantita. Celle vuote, rinvii e orari richiedono uno schema specifico; un turno non equivale a erogazione effettiva. |
+
+L'ispezione è stata limitata alla lettura delle pagine indicate e di tre campioni
+PDF (uno già disponibile temporaneamente dalla Phase 1). Non è stata abilitata
+acquisizione sistematica; l'allowlist operativa resta limitata agli interventi.
+I campioni reali restano fuori dalla repository; si riportano solo metriche tecniche
+aggregate, senza indirizzi, righe o testo dei documenti. Resta non qualificata la
+licenza per pubblicare i dataset derivati AICA.
+
+## Anagrafica amministrativa ISTAT
+
+Fonte ufficiale: [classificazione territoriale](https://www.istat.it/classificazione/codici-dei-comuni-delle-province-e-delle-regioni/)
+e [CSV ISTAT](https://www.istat.it/storage/codici-unita-amministrative/Elenco-comuni-italiani.csv),
+acquisito il 27 novembre 2026. Le [note legali ISTAT](https://www.istat.it/note-legali/)
+indicano CC BY 4.0 salvo diversa specifica. Il sottoinsieme AG contiene 43 comuni;
+abbiamo selezionato codici e nomi ufficiali, mantenendo gli zeri iniziali come stringhe.
+Fonte, hash originale, trasformazione e attribuzione sono nel file provenance della
+risorsa del package. L'elenco non autorizza inferenze sulla copertura effettiva AICA.
+
+## Workflow storico, ancora disabilitato
+
+Oltre alle condizioni già elencate, la conservazione di database ed export come
+artefatti GitHub richiede una valutazione della visibilità della repository e del
+riuso degli indirizzi. HISTORY_STORAGE_VERIFIED deve rimanere non attiva fino a tale
+verifica. Il registro deve consentire sia acquisizione sia redistribuzione per quel
+workflow. La CLI locale non pubblica nulla e può essere usata per campioni già
+legittimamente disponibili, registrando il tempo effettivo di osservazione.
+
+Il workflow manuale richiede previous_run_id per scaricare il database precedente;
+solo la prima esecuzione può usare initialize_history=true. Un artefatto mancante
+causa errore e non avvia uno storico nuovo. La retention di 30 giorni richiede backup
+esterno approvato e una procedura per la continuità. Il cron non si abilita finché
+non sono risolti storage durevole e recupero dello storico. Nessun workflow reale
+è stato avviato durante questa fase.
