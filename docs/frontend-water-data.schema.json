@@ -1,0 +1,568 @@
+{
+  "$defs": {
+    "EventSummary": {
+      "properties": {
+        "event_id": {
+          "title": "Event Id",
+          "type": "string"
+        },
+        "source_id": {
+          "title": "Source Id",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "categories": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Categories",
+          "type": "array"
+        },
+        "source_url": {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "title": "Source Url",
+          "type": "string"
+        },
+        "published_on": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Published On"
+        },
+        "acquired_at": {
+          "format": "date-time",
+          "title": "Acquired At",
+          "type": "string"
+        },
+        "reliability": {
+          "title": "Reliability",
+          "type": "string"
+        },
+        "validation_status": {
+          "title": "Validation Status",
+          "type": "string"
+        },
+        "restoration_confirmed": {
+          "title": "Restoration Confirmed",
+          "type": "boolean"
+        },
+        "network_level": {
+          "title": "Network Level",
+          "type": "string"
+        },
+        "municipality_istat_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Municipality Istat Codes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "event_id",
+        "source_id",
+        "title",
+        "categories",
+        "source_url",
+        "published_on",
+        "acquired_at",
+        "reliability",
+        "validation_status",
+        "restoration_confirmed",
+        "network_level",
+        "municipality_istat_codes"
+      ],
+      "title": "EventSummary",
+      "type": "object"
+    },
+    "TechnicalSummary": {
+      "properties": {
+        "intervention_id": {
+          "title": "Intervention Id",
+          "type": "string"
+        },
+        "municipality": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Municipality"
+        },
+        "municipality_istat_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Municipality Istat Code"
+        },
+        "intervention_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Intervention Type"
+        },
+        "network_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Network Type"
+        },
+        "reported_status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reported Status"
+        },
+        "address_quality": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Address Quality"
+        },
+        "source_url": {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "title": "Source Url",
+          "type": "string"
+        },
+        "last_seen_at": {
+          "format": "date-time",
+          "title": "Last Seen At",
+          "type": "string"
+        }
+      },
+      "required": [
+        "intervention_id",
+        "municipality",
+        "municipality_istat_code",
+        "intervention_type",
+        "network_type",
+        "reported_status",
+        "address_quality",
+        "source_url",
+        "last_seen_at"
+      ],
+      "title": "TechnicalSummary",
+      "type": "object"
+    },
+    "TerritorialIndicator": {
+      "properties": {
+        "municipality_istat_code": {
+          "title": "Municipality Istat Code",
+          "type": "string"
+        },
+        "municipality": {
+          "title": "Municipality",
+          "type": "string"
+        },
+        "operator_coverage": {
+          "title": "Operator Coverage",
+          "type": "string"
+        },
+        "explicitly_mentioned_events": {
+          "title": "Explicitly Mentioned Events",
+          "type": "integer"
+        },
+        "service_status": {
+          "const": "unknown",
+          "title": "Service Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "municipality_istat_code",
+        "municipality",
+        "operator_coverage",
+        "explicitly_mentioned_events",
+        "service_status"
+      ],
+      "title": "TerritorialIndicator",
+      "type": "object"
+    },
+    "TimelineEntry": {
+      "properties": {
+        "entity_type": {
+          "enum": [
+            "water_event",
+            "turnation",
+            "technical_intervention"
+          ],
+          "title": "Entity Type",
+          "type": "string"
+        },
+        "entity_id": {
+          "title": "Entity Id",
+          "type": "string"
+        },
+        "observed_at": {
+          "format": "date-time",
+          "title": "Observed At",
+          "type": "string"
+        },
+        "changes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Changes",
+          "type": "array"
+        },
+        "present_in_calendar": {
+          "title": "Present In Calendar",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "entity_type",
+        "entity_id",
+        "observed_at",
+        "changes"
+      ],
+      "title": "TimelineEntry",
+      "type": "object"
+    },
+    "TurnationSummary": {
+      "properties": {
+        "turnation_id": {
+          "title": "Turnation Id",
+          "type": "string"
+        },
+        "municipality": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Municipality"
+        },
+        "municipality_istat_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Municipality Istat Code"
+        },
+        "zone": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Zone"
+        },
+        "reservoir": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reservoir"
+        },
+        "date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Date"
+        },
+        "time_slot": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Time Slot"
+        },
+        "valid_from": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Valid From"
+        },
+        "valid_until": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Valid Until"
+        },
+        "notes": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Notes"
+        },
+        "validation_status": {
+          "title": "Validation Status",
+          "type": "string"
+        },
+        "calendar_version": {
+          "title": "Calendar Version",
+          "type": "string"
+        },
+        "source_url": {
+          "format": "uri",
+          "maxLength": 2083,
+          "minLength": 1,
+          "title": "Source Url",
+          "type": "string"
+        },
+        "actual_delivery_confirmed": {
+          "const": false,
+          "title": "Actual Delivery Confirmed",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "turnation_id",
+        "municipality",
+        "municipality_istat_code",
+        "zone",
+        "reservoir",
+        "date",
+        "time_slot",
+        "valid_from",
+        "valid_until",
+        "notes",
+        "validation_status",
+        "calendar_version",
+        "source_url",
+        "actual_delivery_confirmed"
+      ],
+      "title": "TurnationSummary",
+      "type": "object"
+    },
+    "UpdateStatus": {
+      "properties": {
+        "last_attempt_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Last Attempt At"
+        },
+        "last_success_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Last Success At"
+        },
+        "last_source_observed_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Last Source Observed At"
+        },
+        "status": {
+          "title": "Status",
+          "type": "string"
+        },
+        "errors": {
+          "title": "Errors",
+          "type": "integer"
+        },
+        "review_records": {
+          "title": "Review Records",
+          "type": "integer"
+        },
+        "scheduled_acquisition_enabled": {
+          "const": false,
+          "title": "Scheduled Acquisition Enabled",
+          "type": "boolean"
+        },
+        "caveat": {
+          "title": "Caveat",
+          "type": "string"
+        }
+      },
+      "required": [
+        "last_attempt_at",
+        "last_success_at",
+        "last_source_observed_at",
+        "status",
+        "errors",
+        "review_records",
+        "scheduled_acquisition_enabled",
+        "caveat"
+      ],
+      "title": "UpdateStatus",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "schema_version": {
+      "const": 3,
+      "default": 3,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "generated_at": {
+      "format": "date-time",
+      "title": "Generated At",
+      "type": "string"
+    },
+    "publication_approved": {
+      "const": false,
+      "default": false,
+      "title": "Publication Approved",
+      "type": "boolean"
+    },
+    "data_origin": {
+      "enum": [
+        "real",
+        "synthetic",
+        "empty"
+      ],
+      "title": "Data Origin",
+      "type": "string"
+    },
+    "recent_events": {
+      "items": {
+        "$ref": "#/$defs/EventSummary"
+      },
+      "title": "Recent Events",
+      "type": "array"
+    },
+    "events_by_municipality": {
+      "additionalProperties": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "title": "Events By Municipality",
+      "type": "object"
+    },
+    "technical_interventions": {
+      "items": {
+        "$ref": "#/$defs/TechnicalSummary"
+      },
+      "title": "Technical Interventions",
+      "type": "array"
+    },
+    "turnations": {
+      "items": {
+        "$ref": "#/$defs/TurnationSummary"
+      },
+      "title": "Turnations",
+      "type": "array"
+    },
+    "timeline": {
+      "items": {
+        "$ref": "#/$defs/TimelineEntry"
+      },
+      "title": "Timeline",
+      "type": "array"
+    },
+    "territorial_indicators": {
+      "items": {
+        "$ref": "#/$defs/TerritorialIndicator"
+      },
+      "title": "Territorial Indicators",
+      "type": "array"
+    },
+    "last_update": {
+      "$ref": "#/$defs/UpdateStatus"
+    }
+  },
+  "required": [
+    "generated_at",
+    "data_origin",
+    "last_update"
+  ],
+  "title": "FrontendDataset",
+  "type": "object"
+}

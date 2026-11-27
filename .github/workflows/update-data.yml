@@ -26,7 +26,9 @@ concurrency:
 jobs:
   staging:
     # Doppio consenso documentato: acquisizione/riuso e conservazione su GitHub.
-    if: vars.SOURCES_VERIFIED == 'true' && vars.HISTORY_STORAGE_VERIFIED == 'true'
+    # Phase 3: artefatti temporanei non ammessi come unico archivio.
+    # Riattivare solo dopo integrazione e restore verificato di uno storage durevole.
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:

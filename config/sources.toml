@@ -23,3 +23,19 @@ url = "https://www.regione.sicilia.it/"
 checked_on = "2026-11-27"
 acquisition_approved = false
 redistribution_approved = false
+
+# Qualificazione separata per canale: approvare AICA PDF non abilita altre sezioni.
+[aica_communications]
+url = "https://www.aicaonline.it/comunicazioni/"
+acquisition_approved = false
+redistribution_approved = false
+
+[aica_turnations]
+url = "https://www.aicaonline.it/turni-idrici-2/"
+acquisition_approved = false
+redistribution_approved = false
+
+[siciliacque_notices]
+url = "https://www.siciliacque.it/avvisi/"
+acquisition_approved = false
+redistribution_approved = false

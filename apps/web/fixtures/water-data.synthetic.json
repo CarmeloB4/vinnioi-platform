@@ -1,0 +1,499 @@
+{
+  "schema_version": 3,
+  "generated_at": "2026-11-27T15:08:45.493492Z",
+  "publication_approved": false,
+  "data_origin": "synthetic",
+  "recent_events": [
+    {
+      "event_id": "843525659b5375eabd092797211fe169b5e52c55930b7aa9395df6e5935501a4",
+      "source_id": "aica",
+      "title": "Ripristino sintetico a Licata",
+      "categories": [
+        "ripristino_confermato"
+      ],
+      "source_url": "https://www.aicaonline.it/comunicazioni/fixture-sintetica/",
+      "published_on": "2026-11-20",
+      "acquired_at": "2026-11-21T12:00:00Z",
+      "reliability": "rule_based",
+      "validation_status": "validated",
+      "restoration_confirmed": true,
+      "network_level": "unspecified",
+      "municipality_istat_codes": [
+        "084021"
+      ]
+    },
+    {
+      "event_id": "78d85f80275910c5006f878f53a2c30151674cedb62c4e6b5c958f5bc4963807",
+      "source_id": "siciliacque",
+      "title": "Guasto sintetico acquedotto Gela-Aragona",
+      "categories": [
+        "guasto"
+      ],
+      "source_url": "https://www.siciliacque.it/avvisi/fixture-sintetica/",
+      "published_on": "2026-11-20",
+      "acquired_at": "2026-11-20T12:00:00Z",
+      "reliability": "rule_based",
+      "validation_status": "validated",
+      "restoration_confirmed": false,
+      "network_level": "adduction",
+      "municipality_istat_codes": [
+        "084021"
+      ]
+    }
+  ],
+  "events_by_municipality": {
+    "084021": [
+      "843525659b5375eabd092797211fe169b5e52c55930b7aa9395df6e5935501a4",
+      "78d85f80275910c5006f878f53a2c30151674cedb62c4e6b5c958f5bc4963807"
+    ]
+  },
+  "technical_interventions": [
+    {
+      "intervention_id": "44c7bba453448635558288e40e855daf2c87a9b5daf5389588175259d6002e3a",
+      "municipality": "Agrigento",
+      "municipality_istat_code": "084001",
+      "intervention_type": "Idrico leggero",
+      "network_type": "IDRICA",
+      "reported_status": "PIANIFICATO",
+      "address_quality": "house_number_unavailable",
+      "source_url": "https://www.aicaonline.it/interventi_programmati/interventi_agrigento.pdf",
+      "last_seen_at": "2026-11-20T11:59:59Z"
+    },
+    {
+      "intervention_id": "7c12d6784d3e592abd59f70110c613be2b5eee6e068474436c1f0d6e855c031e",
+      "municipality": "Agrigento",
+      "municipality_istat_code": "084001",
+      "intervention_type": "Idrico leggero",
+      "network_type": "IDRICA",
+      "reported_status": "PIANIFICATO",
+      "address_quality": "as_reported",
+      "source_url": "https://www.aicaonline.it/interventi_programmati/interventi_agrigento.pdf",
+      "last_seen_at": "2026-11-20T11:59:59Z"
+    }
+  ],
+  "turnations": [
+    {
+      "turnation_id": "4a79017163b4aadf809e237e908538f75f610f596f3c2206c4decc6650cf7b16",
+      "municipality": "Agrigento",
+      "municipality_istat_code": "084001",
+      "zone": "ZONA TEST 1",
+      "reservoir": "Serbatoio sintetico",
+      "date": "2026-11-21",
+      "time_slot": null,
+      "valid_from": "2026-11-20",
+      "valid_until": "2026-11-21",
+      "notes": "Rinviato",
+      "validation_status": "validated",
+      "calendar_version": "8a90fda59b0bb2d358ec54fe18f18a902f4ddcf263022d913aecdea55e07de05",
+      "source_url": "https://www.aicaonline.it/turni-idrici-2/",
+      "actual_delivery_confirmed": false
+    },
+    {
+      "turnation_id": "749d8419b12a58abc118c4db9c485344a51b75ebeb581bd83a71959d288abc6f",
+      "municipality": "Agrigento",
+      "municipality_istat_code": "084001",
+      "zone": "ZONA TEST 1",
+      "reservoir": "Serbatoio sintetico",
+      "date": "2026-11-20",
+      "time_slot": "10:00",
+      "valid_from": "2026-11-20",
+      "valid_until": "2026-11-21",
+      "notes": null,
+      "validation_status": "validated",
+      "calendar_version": "8a90fda59b0bb2d358ec54fe18f18a902f4ddcf263022d913aecdea55e07de05",
+      "source_url": "https://www.aicaonline.it/turni-idrici-2/",
+      "actual_delivery_confirmed": false
+    }
+  ],
+  "timeline": [
+    {
+      "entity_type": "technical_intervention",
+      "entity_id": "44c7bba453448635558288e40e855daf2c87a9b5daf5389588175259d6002e3a",
+      "observed_at": "2026-11-20T11:59:59Z",
+      "changes": [
+        "new"
+      ]
+    },
+    {
+      "entity_type": "technical_intervention",
+      "entity_id": "7c12d6784d3e592abd59f70110c613be2b5eee6e068474436c1f0d6e855c031e",
+      "observed_at": "2026-11-20T11:59:59Z",
+      "changes": [
+        "new"
+      ]
+    },
+    {
+      "entity_type": "turnation",
+      "entity_id": "4a79017163b4aadf809e237e908538f75f610f596f3c2206c4decc6650cf7b16",
+      "observed_at": "2026-11-20T12:00:00Z",
+      "changes": [
+        "new"
+      ],
+      "present_in_calendar": true
+    },
+    {
+      "entity_type": "turnation",
+      "entity_id": "749d8419b12a58abc118c4db9c485344a51b75ebeb581bd83a71959d288abc6f",
+      "observed_at": "2026-11-20T12:00:00Z",
+      "changes": [
+        "new"
+      ],
+      "present_in_calendar": true
+    },
+    {
+      "entity_type": "water_event",
+      "entity_id": "78d85f80275910c5006f878f53a2c30151674cedb62c4e6b5c958f5bc4963807",
+      "observed_at": "2026-11-20T12:00:00Z",
+      "changes": [
+        "new"
+      ]
+    },
+    {
+      "entity_type": "water_event",
+      "entity_id": "843525659b5375eabd092797211fe169b5e52c55930b7aa9395df6e5935501a4",
+      "observed_at": "2026-11-20T12:00:00Z",
+      "changes": [
+        "new"
+      ]
+    },
+    {
+      "entity_type": "turnation",
+      "entity_id": "4a79017163b4aadf809e237e908538f75f610f596f3c2206c4decc6650cf7b16",
+      "observed_at": "2026-11-21T12:00:00Z",
+      "changes": [
+        "known"
+      ],
+      "present_in_calendar": true
+    },
+    {
+      "entity_type": "turnation",
+      "entity_id": "749d8419b12a58abc118c4db9c485344a51b75ebeb581bd83a71959d288abc6f",
+      "observed_at": "2026-11-21T12:00:00Z",
+      "changes": [
+        "changed"
+      ],
+      "present_in_calendar": true
+    },
+    {
+      "entity_type": "water_event",
+      "entity_id": "843525659b5375eabd092797211fe169b5e52c55930b7aa9395df6e5935501a4",
+      "observed_at": "2026-11-21T12:00:00Z",
+      "changes": [
+        "changed"
+      ]
+    }
+  ],
+  "territorial_indicators": [
+    {
+      "municipality_istat_code": "084001",
+      "municipality": "Agrigento",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084002",
+      "municipality": "Alessandria della Rocca",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084003",
+      "municipality": "Aragona",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084004",
+      "municipality": "Bivona",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084005",
+      "municipality": "Burgio",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084006",
+      "municipality": "Calamonaci",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084007",
+      "municipality": "Caltabellotta",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084008",
+      "municipality": "Camastra",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084009",
+      "municipality": "Cammarata",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084010",
+      "municipality": "Campobello di Licata",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084011",
+      "municipality": "Canicattì",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084012",
+      "municipality": "Casteltermini",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084013",
+      "municipality": "Castrofilippo",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084014",
+      "municipality": "Cattolica Eraclea",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084015",
+      "municipality": "Cianciana",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084016",
+      "municipality": "Comitini",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084017",
+      "municipality": "Favara",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084018",
+      "municipality": "Grotte",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084019",
+      "municipality": "Joppolo Giancaxio",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084020",
+      "municipality": "Lampedusa e Linosa",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084021",
+      "municipality": "Licata",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 2,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084022",
+      "municipality": "Lucca Sicula",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084023",
+      "municipality": "Menfi",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084024",
+      "municipality": "Montallegro",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084025",
+      "municipality": "Montevago",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084026",
+      "municipality": "Naro",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084027",
+      "municipality": "Palma di Montechiaro",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084028",
+      "municipality": "Porto Empedocle",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084029",
+      "municipality": "Racalmuto",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084030",
+      "municipality": "Raffadali",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084031",
+      "municipality": "Ravanusa",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084032",
+      "municipality": "Realmonte",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084033",
+      "municipality": "Ribera",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084034",
+      "municipality": "Sambuca di Sicilia",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084035",
+      "municipality": "San Biagio Platani",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084036",
+      "municipality": "San Giovanni Gemini",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084037",
+      "municipality": "Santa Elisabetta",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084038",
+      "municipality": "Santa Margherita di Belice",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084039",
+      "municipality": "Sant'Angelo Muxaro",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084040",
+      "municipality": "Santo Stefano Quisquina",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084041",
+      "municipality": "Sciacca",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084042",
+      "municipality": "Siculiana",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    },
+    {
+      "municipality_istat_code": "084043",
+      "municipality": "Villafranca Sicula",
+      "operator_coverage": "unknown",
+      "explicitly_mentioned_events": 0,
+      "service_status": "unknown"
+    }
+  ],
+  "last_update": {
+    "last_attempt_at": "2026-11-22T12:00:00Z",
+    "last_success_at": "2026-11-22T12:00:00Z",
+    "last_source_observed_at": "2026-11-21T12:00:00Z",
+    "status": "completed",
+    "errors": 0,
+    "review_records": 0,
+    "scheduled_acquisition_enabled": false,
+    "caveat": "L'assenza di osservazioni non indica assenza di disservizi"
+  }
+}

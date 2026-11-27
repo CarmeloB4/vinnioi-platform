@@ -38,7 +38,7 @@ provenienza, regole di classificazione e blocchi di acquisizione.
   esplicito `FORNITURA RIPRISTINATA` è riconosciuto come conferma; non assegnare
   `resolved_at` al momento del download se la data della fonte non è disponibile.
 - Non riconciliare assenze su documenti incompleti, layout sconosciuti o con quarantena.
-- Righe con identificativi duplicati, indirizzi segnaposto, stati nuovi, comuni incerti
+- Righe con identificativi duplicati, stati nuovi, comuni incerti
   o provenienza incoerente devono rimanere in revisione.
 - I 43 comuni ISTAT rappresentano la copertura amministrativa. La presenza di un PDF
   non certifica la copertura del gestore; `operator_coverage` resta unknown.
@@ -46,3 +46,27 @@ provenienza, regole di classificazione e blocchi di acquisizione.
 - Dopo modifiche allo storico eseguire anche la demo sintetica in una directory nuova.
 - Gli export locali non sono una pubblicazione. L'artefatto CI ordinario contiene solo
   il report sintetico. Qualsiasi storage di dati reali richiede condizioni verificate.
+
+## Phase 3: eventi, calendari e continuità
+
+- Il segnaposto civico finale 99999 segue la regola verificata AICA-99999-v1:
+  address_original invariato, address senza quel suffisso, house_number=null e
+  qualità distinta dalla validità dell'intervento. Non promuovere vecchie quarantene
+  senza decisione esplicita, hash, fonte, motivazione e regola.
+- Titolo e testo operativo dell'articolo sono separati da menu, contatti e footer.
+  Negazioni e previsioni non confermano un ripristino. La potabilità è una categoria
+  di dichiarazione della fonte, non un giudizio sanitario del progetto.
+- Il nome di una condotta non attribuisce automaticamente impatto ai comuni omonimi.
+  Distinguere area di servizio esplicita e sola menzione; il livello rete richiede evidenza.
+- Date relative richiedono un ancoraggio editoriale; non completare un calendario
+  usando mese o anno del download. Una cella programmata non prova erogazione.
+- Eventi di fonti diverse restano distinti. Le correlazioni hanno motivazioni,
+  versioni documentali e stato candidate: mai fusione o propagazione automatica.
+- Schema 3 migra da 2 senza cancellare storico e quarantena. Fare backup prima di
+  usare la migrazione su dati reali. Le decisioni di revisione sono append-only nell'API.
+- Non riattivare update-data.yml finché storage durevole e licenze non sono verificati
+  e integrati. Gli artefatti temporanei non possono essere l'unico storico.
+- Contratti frontend: publication_approved=false e fixture soltanto sintetiche.
+  Non copiare database, evidenze o indirizzi tecnici nelle directory pubbliche.
+- Dopo modifiche Phase 3 eseguire anche scripts/demo_integration.py in directory nuova;
+  comprende backup e restore locali verificati. Nessuna dashboard completa in questa fase.

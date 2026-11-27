@@ -34,6 +34,7 @@ def parse_interventions(
     result = ParseResult()
     extracted_at = extracted_at or datetime.now(UTC)
     document_hash = hashlib.sha256(content).hexdigest()
+    area = None
     if observed_at.tzinfo is None:
         raise ValueError("Timestamp di osservazione privo di timezone")
     try:
@@ -56,7 +57,16 @@ def parse_interventions(
                     if generated:
                         result.document_generated_at = generated[1].strip()
                     title = re.search(r"Interventi\s*-\s*([^\n]+)", text)
-                    if not title or normalize(title[1]) != normalize(municipality):
+                    matches = bool(title and normalize(title[1]) == normalize(municipality))
+                    if (
+                        title
+                        and normalize(title[1]) == "licata extra urbana"
+                        and normalize(municipality) == "licata"
+                        and source_url.endswith("/interventi_licata_extra_urbana.pdf")
+                    ):
+                        matches = True
+                        area = "extra urbana"
+                    if not matches:
                         result.errors.append("municipality_title_mismatch")
                 words = page.get_text("words")
                 recognized = 0
@@ -105,6 +115,7 @@ def parse_interventions(
                                 source_intervention_id=code or None,
                                 municipality=municipality,
                                 address=address or None,
+                                area=area,
                                 intervention_type=kind or None,
                                 network_type=network,
                                 reported_status=status or None,

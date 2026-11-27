@@ -31,6 +31,7 @@ INTERVENTION_COLUMNS = {
 FACT_FIELDS = (
     "municipality_istat_code",
     "address",
+    "area",
     "intervention_type",
     "network_type",
     "published_at",
@@ -94,7 +95,7 @@ class Store:
                 run_id VARCHAR PRIMARY KEY, report JSON NOT NULL);
         """)
         version = self.connection.execute("SELECT version FROM schema_version").fetchall()
-        if version and version != [(2,)]:
+        if version and version not in ([(2,)], [(3,)]):
             raise ValueError("Versione database non supportata: migrazione necessaria")
         if not version:
             self.connection.execute("INSERT INTO schema_version VALUES (2)")
@@ -102,6 +103,21 @@ class Store:
         self.connection.execute(
             f"CREATE TABLE IF NOT EXISTS interventions ({columns}, PRIMARY KEY(intervention_id))"
         )
+        # Migrazione additiva transazionale; nessuna promozione dei vecchi record.
+        self.connection.execute("BEGIN TRANSACTION")
+        try:
+            for name in ("address_original", "house_number", "address_quality", "area"):
+                self.connection.execute(
+                    f"ALTER TABLE interventions ADD COLUMN IF NOT EXISTS {name} VARCHAR"
+                )
+            from vinnioi.integration_store import initialize_integration
+
+            initialize_integration(self.connection)
+            self.connection.execute("UPDATE schema_version SET version=3")
+            self.connection.execute("COMMIT")
+        except Exception:
+            self.connection.execute("ROLLBACK")
+            raise
         for row in municipalities():
             self.connection.execute(
                 "INSERT INTO municipalities VALUES (?, ?, ?, ?, ?) ON CONFLICT DO NOTHING",
@@ -268,7 +284,7 @@ class Store:
                 doc_id = document_id(url, sha)
                 self.connection.execute(
                     """INSERT INTO source_documents VALUES
-                    (?, 'aica', ?, ?, ?, ?, ?, '0.2.0', ?, ?) ON CONFLICT DO NOTHING""",
+                    (?, 'aica', ?, ?, ?, ?, ?, '0.3.0', ?, ?) ON CONFLICT DO NOTHING""",
                     [
                         doc_id,
                         url,
@@ -333,7 +349,8 @@ class Store:
         old_tuple = self.connection.execute(
             "SELECT * FROM interventions WHERE intervention_id=?", [row.intervention_id]
         ).fetchone()
-        old = dict(zip(INTERVENTION_COLUMNS, old_tuple, strict=True)) if old_tuple else None
+        old_names = [col[0] for col in self.connection.description]
+        old = dict(zip(old_names, old_tuple, strict=True)) if old_tuple else None
         changes = []
         if old:
             row.first_seen_at = old["first_seen_at"]
@@ -418,7 +435,11 @@ class Store:
         for (value,) in changes:
             for change in json.loads(value):
                 change_counts[change] = change_counts.get(change, 0) + 1
+        address_counts = {}
+        for row in rows:
+            address_counts[row.address_quality] = address_counts.get(row.address_quality, 0) + 1
         return dict(
+            address_quality_counts=address_counts,
             run_id=run_id,
             data_origin=data_origin,
             documents_analyzed=len(documents),

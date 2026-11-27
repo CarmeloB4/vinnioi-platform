@@ -19,7 +19,6 @@ NETWORKS = {"IDRICA", "FOGNARIA", "MISTA"}
 REQUIRED = (
     "source_intervention_id",
     "municipality_istat_code",
-    "address",
     "intervention_type",
     "network_type",
     "reported_status",
@@ -56,8 +55,22 @@ def validate_rows(rows: list[Intervention], observed_at: datetime) -> list[Inter
             issues.add("unknown_network")
         if any(getattr(row, field) is None for field in REQUIRED):
             issues.add("incomplete_record")
-        if row.address and ("99999" in row.address or normalize(row.address) in {"nd", "n/d"}):
-            issues.add("address_placeholder")
+        original = row.address_original if row.address_original is not None else row.address
+        row.address_original = original
+        if original and re.search(r"\s+99999$", original.strip()):
+            row.address = re.sub(r"\s+99999$", "", original.strip())
+            row.house_number = None
+            row.address_quality = "house_number_unavailable"
+            issues.discard("address_placeholder")  # Regola civico 99999 verificata, non correzione.
+        elif not original or normalize(original) in {"nd", "n/d", "99999"}:
+            row.address = None
+            row.house_number = None
+            row.address_quality = "unavailable"
+        else:
+            row.address = original
+            number = re.search(r"\s+(\d+[A-Za-z]?)$", original)
+            row.house_number = number[1] if number else None
+            row.address_quality = "as_reported"
         if row.published_at and row.published_at > observed_at:
             issues.add("publication_in_future")
         if row.resolved_at and (

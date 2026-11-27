@@ -1,0 +1,48 @@
+{
+  "data_origin": "synthetic",
+  "counts": {
+    "water_events": 2,
+    "event_observations": 3,
+    "water_turnations": 2,
+    "turnation_observations": 4,
+    "review_decisions": 1,
+    "event_correlations": 1
+  },
+  "reports": [
+    {
+      "run_id": "synthetic-integration-1",
+      "data_origin": "synthetic",
+      "documents_analyzed": 3,
+      "ignored_articles": 0,
+      "input_errors": [],
+      "water_events": 2,
+      "turnation_cells": 2,
+      "review_records": 0,
+      "errors": 0,
+      "coverage_istat_codes": [
+        "084001",
+        "084021"
+      ],
+      "publication_approved": false
+    },
+    {
+      "run_id": "synthetic-integration-2",
+      "data_origin": "synthetic",
+      "documents_analyzed": 2,
+      "ignored_articles": 0,
+      "input_errors": [],
+      "water_events": 1,
+      "turnation_cells": 2,
+      "review_records": 0,
+      "errors": 0,
+      "coverage_istat_codes": [
+        "084001",
+        "084021"
+      ],
+      "publication_approved": false
+    }
+  ],
+  "correlation_candidates": 1,
+  "backup_restore_verified": true,
+  "publication_approved": false
+}
